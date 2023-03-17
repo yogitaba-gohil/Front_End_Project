@@ -16,10 +16,7 @@ function App() {
       <Box sx={{ width: '100%' }}>
         <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
           <Grid item xs={5}>
-            <Button
-              variant="contained"
-              onClick={() => dispatch(handleIncrement())}
-            >
+            <Button variant="contained" onClick={() => dispatch(handleIncrement())}>
               Increment
             </Button>
           </Grid>
@@ -27,10 +24,7 @@ function App() {
             <Typography>{count}</Typography>
           </Grid>
           <Grid item xs={5}>
-            <Button
-              variant="contained"
-              onClick={() => dispatch(handleDecrement())}
-            >
+            <Button variant="contained" onClick={() => dispatch(handleDecrement())}>
               Decrement
             </Button>
           </Grid>
