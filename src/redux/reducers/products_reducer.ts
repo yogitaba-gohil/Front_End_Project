@@ -1,30 +1,81 @@
-import { GET_PRODUCTS_BEGIN, GET_PRODUCTS_SUCCESS, GET_PRODUCTS_ERROR } from '../actions/action'
+import {
+  SIDEBAR_OPEN,
+  SIDEBAR_CLOSE,
+  GET_PRODUCTS_BEGIN,
+  GET_PRODUCTS_SUCCESS,
+  GET_PRODUCTS_ERROR,
+  GET_SINGLE_PRODUCT_BEGIN,
+  GET_SINGLE_PRODUCT_SUCCESS,
+  GET_SINGLE_PRODUCT_ERROR,
+} from '../../redux/actions/action'
 
 import { initialStateType } from '../../context/products_context'
+import { productDataType } from '../../utils/productData'
+
 
 const products_reducer = (state: initialStateType, action: any) => {
+  if (action.type === SIDEBAR_OPEN) {
+    return { ...state, isSidebarOpen: true }
+  }
+  if (action.type === SIDEBAR_CLOSE) {
+    return { ...state, isSidebarOpen: false }
+  }
   if (action.type === GET_PRODUCTS_BEGIN) {
     return { ...state, productsLoading: true }
   }
   if (action.type === GET_PRODUCTS_SUCCESS) {
-    
     // data retrieved from API doesn't fit productDataType shape
     const allProducts = action.payload.map((product: any) => {
-      let { id: id, name, image } = product
+      let {
+        id: id,
+        name,
+        slug,
+        description,
+        categories,
+        clothingCategories, // might be null, need to flatten
+        price,
+        images, //need to flatten
+      } = product
+
+      if (clothingCategories) {
+        clothingCategories = clothingCategories.clothingCategories
+      }
+     
+      // images not optional so no if clause to check
+     
+
+    
 
       return {
         id,
         name,
-        image
+        slug,
+        categories,
+        price,
+        images,
+        description
       }
     })
 
-    return { ...state, productsLoading: false, allProducts }
+    const featuredProducts = allProducts.filter(
+      (product: productDataType) => product
+    )
+
+    return { ...state, productsLoading: false, allProducts, featuredProducts }
   }
   if (action.type === GET_PRODUCTS_ERROR) {
     return { ...state, productsError: true, productsLoading: false }
   }
-
+  if (action.type === GET_SINGLE_PRODUCT_BEGIN){
+    return {...state, singleProductLoading: true}
+  }
+  if (action.type === GET_SINGLE_PRODUCT_SUCCESS) {
+    // check if it returns the correct productDataType object instead of an array
+    return { ...state, singleProduct: action.payload, singleProductLoading: false }
+  }
+  if (action.type === GET_SINGLE_PRODUCT_ERROR){
+    return { ...state, singleProductError: true, singleProductLoading: false}
+  }
   // return state
   throw new Error(`No Matching "${action.type}" - action type`)
 }
