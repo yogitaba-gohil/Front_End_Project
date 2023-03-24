@@ -1,37 +1,31 @@
-import { Box, Button, Grid, Typography } from '@mui/material'
-import { useDispatch, useSelector } from 'react-redux'
-
-import { RootState } from './redux/store'
-import { handleDecrement, handleIncrement } from './redux/actions/counter'
-import './App.css'
+import React from 'react'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import  Navbar  from './components/Navbar/Navbar'
+import HomePage from './pages/HomePage'
 
 function App() {
-  const dispatch = useDispatch()
-  const count = useSelector((state: RootState) => state.count)
-
   return (
-    <div className="App">
-      <h1>Vite + React + Vanilla Redux + Tailwind</h1>
-
-      <Box sx={{ width: '100%' }}>
-        <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-          <Grid item xs={5}>
-            <Button variant="contained" onClick={() => dispatch(handleIncrement())}>
-              Increment
-            </Button>
-          </Grid>
-          <Grid item xs={2}>
-            <Typography>{count}</Typography>
-          </Grid>
-          <Grid item xs={5}>
-            <Button variant="contained" onClick={() => dispatch(handleDecrement())}>
-              Decrement
-            </Button>
-          </Grid>
-        </Grid>
-      </Box>
-    </div>
+    <Router>
+      <Layout>
+        <Routes>
+          <Route  path="/" element={<HomePage />} />
+        </Routes>
+      </Layout>
+    </Router>
   )
 }
 
 export default App
+
+type LayoutProps = {
+  children: React.ReactNode; // children prop typr
+};
+
+const Layout: React.FC<LayoutProps> = (props) => {
+  return (
+    <>
+      <Navbar />
+      {props.children}
+    </>
+  )
+}
