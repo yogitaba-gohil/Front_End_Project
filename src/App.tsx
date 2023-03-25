@@ -6,6 +6,7 @@ import HomePage from './pages/HomePage'
 import ProductsPage from './pages/ProductsPage'
 import SingleProductPage from './pages/SingleProductPage/SingleProductPage'
 import CartPage from './pages/CartPage'
+import Sidebar from './components/Sidebar/Sidebar'
 
 function App() {
   return (
@@ -33,6 +34,7 @@ const Layout: React.FC<LayoutProps> = (props) => {
   return (
     <>
       <Navbar />
+      <Sidebar />
       {props.children}
       <Footer />
     </>

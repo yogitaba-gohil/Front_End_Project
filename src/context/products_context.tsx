@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useReducer } from 'react'
 import reducer from '../redux/reducers/products_reducer'
 import {
+  SIDEBAR_OPEN,
+  SIDEBAR_CLOSE,
   GET_PRODUCTS_BEGIN,
   GET_PRODUCTS_SUCCESS,
   GET_PRODUCTS_ERROR,
@@ -12,9 +14,12 @@ import { productDataType } from '../utils/productData'
 
 export type initialStateType = {
   
+  isSidebarOpen: boolean
   allProducts: productDataType[] | []
   featuredProducts: productDataType[] | []
   singleProduct: productDataType | {}
+  openSidebar: () => void
+  closeSidebar: () => void
   fetchSingleProduct: (id: string) => void
   productsLoading: boolean
   productsError: boolean
@@ -24,9 +29,12 @@ export type initialStateType = {
 
 const initialState: initialStateType = {
 
+  isSidebarOpen: false,
   allProducts: [],
   featuredProducts: [],
   singleProduct: {},
+  openSidebar: () => {},
+  closeSidebar: () => {},
   fetchSingleProduct: (id: string) => {},
   productsLoading: false,
   productsError: false,
@@ -42,6 +50,13 @@ type productProps = {
 
 export const ProductsProvider: React.FC<productProps> = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState)
+
+  const openSidebar = () => {
+    dispatch({ type: SIDEBAR_OPEN })
+  }
+  const closeSidebar = () => {
+    dispatch({ type: SIDEBAR_CLOSE })
+  }
 
   const fetchSingleProduct = (slug: string) => {
     dispatch({ type: GET_SINGLE_PRODUCT_BEGIN })
@@ -75,7 +90,7 @@ export const ProductsProvider: React.FC<productProps> = ({ children }) => {
     fetchProducts()
   }, [])
 
-  return <ProductsContext.Provider value={{ ...state, fetchSingleProduct }}>{children}</ProductsContext.Provider>
+  return <ProductsContext.Provider value={{ ...state, fetchSingleProduct,openSidebar, closeSidebar, }}>{children}</ProductsContext.Provider>
 }
 
 export const useProductsContext = () => {
