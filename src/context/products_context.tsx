@@ -3,18 +3,18 @@ import reducer from '../redux/reducers/products_reducer'
 import {
   GET_PRODUCTS_BEGIN,
   GET_PRODUCTS_SUCCESS,
-  GET_PRODUCTS_ERROR
+  GET_PRODUCTS_ERROR,
+  GET_SINGLE_PRODUCT_BEGIN,
+  GET_SINGLE_PRODUCT_SUCCESS,
+  GET_SINGLE_PRODUCT_ERROR
 } from '../redux/actions/action'
 import { productDataType } from '../utils/productData'
 
 export type initialStateType = {
   
-  isSidebarOpen: boolean
   allProducts: productDataType[] | []
   featuredProducts: productDataType[] | []
   singleProduct: productDataType | {}
-  openSidebar: () => void
-  closeSidebar: () => void
   fetchSingleProduct: (id: string) => void
   productsLoading: boolean
   productsError: boolean
@@ -23,12 +23,10 @@ export type initialStateType = {
 }
 
 const initialState: initialStateType = {
-  isSidebarOpen: false,
+
   allProducts: [],
   featuredProducts: [],
   singleProduct: {},
-  openSidebar: () => {},
-  closeSidebar: () => {},
   fetchSingleProduct: (id: string) => {},
   productsLoading: false,
   productsError: false,
@@ -45,6 +43,23 @@ type productProps = {
 export const ProductsProvider: React.FC<productProps> = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState)
 
+  const fetchSingleProduct = (slug: string) => {
+    dispatch({ type: GET_SINGLE_PRODUCT_BEGIN })
+    try {
+      const singleProduct: productDataType = state.allProducts.filter(
+        (product: productDataType) => product.slug === slug
+      )[0]
+      // running filter() on empty allProducts [] will result in undefined
+      // this if clause guard against such case
+      if (singleProduct) {
+        dispatch({ type: GET_SINGLE_PRODUCT_SUCCESS, payload: singleProduct })
+      }
+    } catch (error) {
+      console.log(error)
+      dispatch({ type: GET_SINGLE_PRODUCT_ERROR })
+    }
+  }
+
   useEffect(() => {
     const fetchProducts = async () => {
       dispatch({ type: GET_PRODUCTS_BEGIN })
@@ -60,7 +75,7 @@ export const ProductsProvider: React.FC<productProps> = ({ children }) => {
     fetchProducts()
   }, [])
 
-  return <ProductsContext.Provider value={{ ...state }}>{children}</ProductsContext.Provider>
+  return <ProductsContext.Provider value={{ ...state, fetchSingleProduct }}>{children}</ProductsContext.Provider>
 }
 
 export const useProductsContext = () => {

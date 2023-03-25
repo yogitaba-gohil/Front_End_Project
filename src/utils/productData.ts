@@ -3,7 +3,7 @@ export type productDataType = {
     name: string
     categories: string
     price: number
-    images: string,
+    images: string[],
     slug:string,
     description:string
   }

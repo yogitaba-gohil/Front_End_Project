@@ -24,27 +24,17 @@ const products_reducer = (state: initialStateType, action: any) => {
     return { ...state, productsLoading: true }
   }
   if (action.type === GET_PRODUCTS_SUCCESS) {
-    // data retrieved from API doesn't fit productDataType shape
+
     const allProducts = action.payload.map((product: any) => {
       let {
-        id: id,
+        id,
         name,
         slug,
         description,
         categories,
-        clothingCategories, // might be null, need to flatten
         price,
         images, //need to flatten
       } = product
-
-      if (clothingCategories) {
-        clothingCategories = clothingCategories.clothingCategories
-      }
-     
-      // images not optional so no if clause to check
-     
-
-    
 
       return {
         id,

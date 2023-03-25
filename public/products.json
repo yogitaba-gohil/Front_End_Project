@@ -1,3 +1,3 @@
 {
-    "data":[{"id":1, "name": "ABC","description":"asc","categories":"Face","sizes":"small","images":"https://stock.adobe.com/fi/images/lipstick-beauty-make-up/58381204","price":100,"slug":"djsgdj"},{"id":2,"name": "ABC","description":"asc","categories":"Lips","sizes":"small", "images":"https://as1.ftcdn.net/v2/jpg/01/08/20/22/1000_F_108202241_82JGs1LyvHCCiLGWSkMKnDI8nXnq9gu8.jpg","price":200,"slug":"djhgsjh"}]
+    "data":[{"id":1, "name": "ABC","description":"asc","categories":"Face","sizes":"small","images":["https://stock.adobe.com/fi/images/lipstick-beauty-make-up/58381204", "https://stock.adobe.com/fi/images/lipstick-beauty-make-up/58381204"],"price":100,"slug":"djsgdj"},{"id":2,"name": "ABC","description":"asc","categories":"Lips","sizes":"small", "images":["https://as1.ftcdn.net/v2/jpg/01/08/20/22/1000_F_108202241_82JGs1LyvHCCiLGWSkMKnDI8nXnq9gu8.jpg","https://stock.adobe.com/fi/images/lipstick-beauty-make-up/58381204"],"price":200,"slug":"djhgsjh"}]
 }

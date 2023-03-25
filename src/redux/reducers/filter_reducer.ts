@@ -57,11 +57,9 @@ import {
       } = state.filters
   
       let tempProducts = [...allProducts]
-      console.log('tempProducts', tempProducts)
       // filter by searchTerm
       if (searchTerm) {
         tempProducts = tempProducts.filter(product => {
-          console.log(product)
           return (
             product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
             product.description.toLowerCase().includes(searchTerm.toLowerCase())
