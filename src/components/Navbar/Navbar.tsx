@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import CartButtons from '../CartButtons'
+import LogInButton from '../LogInButton'
 import { Logo } from './Logo'
 import { MenuIcon } from './MenuIcon'
 import { NavLinks } from './NavLinks'
@@ -16,6 +17,7 @@ const Navbar = () => {
         <NavLinks className="nav-links" />
       </div>
       <CartButtons />
+      <LogInButton />
     </NavContainer>
   )
 }
@@ -57,6 +59,9 @@ const NavContainer = styled.nav`
   .cart-btn-wrapper {
     display: none;
   }
+  .log-btn-wrapper {
+    display: none;
+  }
   @media (min-width: 992px) {
     img {
       margin-left: 15px;
@@ -87,6 +92,9 @@ const NavContainer = styled.nav`
       }
     }
     .cart-btn-wrapper {
+      display: grid;
+    }
+    .log-btn-wrapper {
       display: grid;
     }
   }

@@ -10,14 +10,14 @@ export const links = [
   },
   {
     id: 2,
-    text: 'shipping',
-    url: '/shipping'
+    text: 'products',
+    url: '/products'
   },
   {
     id: 3,
-    text: 'products',
-    url: '/products'
-  }
+    text: 'admin',
+    url: '/admin'
+  },
 ]
 
 

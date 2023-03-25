@@ -7,6 +7,7 @@ import ProductsPage from './pages/ProductsPage'
 import SingleProductPage from './pages/SingleProductPage/SingleProductPage'
 import CartPage from './pages/CartPage'
 import Sidebar from './components/Sidebar/Sidebar'
+import LogInPage from './pages/LogInPage'
 
 function App() {
   return (
@@ -17,6 +18,8 @@ function App() {
           <Route  path='/products' element={<ProductsPage />} />
           <Route  path='/products/:slug' element={<SingleProductPage />} />
           <Route  path='/cart' element={<CartPage />} />
+          <Route  path='/logIn' element={<LogInPage />} />
+
             
         </Routes>
       </Layout>

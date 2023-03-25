@@ -2,18 +2,17 @@ import React from 'react'
 import styled from 'styled-components'
 import { useCartContext } from '../context/cart_context'
 import { Link } from 'react-router-dom'
-import  PageHero from '../components/PageHero'
+import PageHero from '../components/PageHero'
 import CartContent from '../components/CartContent'
-
 
 const CartPage = () => {
   const { cart } = useCartContext()
   if (cart.length < 1) {
     return (
-      <Wrapper className='page-100'>
-        <div className='empty'>
+      <Wrapper className="page-100">
+        <div className="empty">
           <h2>Your cart is empty</h2>
-          <Link to='/products' className='btn'>
+          <Link to="/products" className="btn">
             go to fill your cart
           </Link>
         </div>
@@ -22,8 +21,8 @@ const CartPage = () => {
   } else {
     return (
       <main>
-        <PageHero title='Cart' />
-        <Wrapper className='page'>
+        <PageHero title="Cart" />
+        <Wrapper className="page">
           <CartContent />
         </Wrapper>
       </main>

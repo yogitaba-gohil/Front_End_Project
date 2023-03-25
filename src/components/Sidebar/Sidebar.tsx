@@ -4,6 +4,7 @@ import CartButtons from '../CartButtons'
 import { NavLinks } from '../Navbar/NavLinks'
 import { useProductsContext } from '../../context/products_context'
 import { SidebarHeader } from './SidebarHeader'
+import LogInButton from '../LogInButton'
 
 const Sidebar = () => {
   const { isSidebarOpen } = useProductsContext()
@@ -14,6 +15,7 @@ const Sidebar = () => {
         <SidebarHeader />
         <NavLinks className='links' isSidebar={true} />
         <CartButtons />
+        <LogInButton />
       </aside>
     </SidebarContainer>
   )
@@ -81,6 +83,9 @@ const SidebarContainer = styled.div`
     z-index: 999;
   }
   .cart-btn-wrapper {
+    margin: 2rem auto;
+  }
+  .log-btn-wrapper {
     margin: 2rem auto;
   }
   @media screen and (min-width: 992px) {

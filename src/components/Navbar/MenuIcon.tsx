@@ -9,5 +9,6 @@ export const MenuIcon = () => {
     <button type="button" className="nav-toggle" onClick={openSidebar}>
       <FaBars />
     </button>
+    
   )
 }
