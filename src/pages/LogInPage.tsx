@@ -1,12 +1,13 @@
 import React from 'react'
 import styled from 'styled-components'
+import LogInContent from '../components/LogInContent'
 import PageHero from '../components/PageHero'
 
 const LogInPage = () => {
   return (
     <main>
         <PageHero title="Log-In" />
-      <Wrapper className="page">log-in</Wrapper>
+      <Wrapper className="page"><LogInContent /></Wrapper>
     </main>
   )
 }
