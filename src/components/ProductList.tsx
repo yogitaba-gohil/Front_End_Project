@@ -5,7 +5,7 @@ import { useFilterContext } from '../context/filter_context'
 import GridView from './GridView'
 
 const ProductList = () => {
-  const { productsLoading, allProducts } = useProductsContext()
+  const { productsLoading } = useProductsContext()
   const { filteredProducts } = useFilterContext()
 
   if (productsLoading) {

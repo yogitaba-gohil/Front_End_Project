@@ -114,13 +114,7 @@ const Wrapper = styled.section`
   .price {
     margin-bottom: 0.25rem;
   }
-  .checkbox {
-    display: grid;
-    grid-template-columns: 1fr;
-    align-items: center;
-    column-gap: 0.5rem;
-    font-size: 1rem;
-  }
+  
   .clear-btn {
     background: var(--clr-red-dark);
     color: var(--clr-white);
