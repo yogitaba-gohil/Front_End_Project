@@ -1,15 +1,28 @@
-import React from 'react'
+import React, {useState} from 'react'
 import styled from 'styled-components'
 
+interface UserInput {
+  email: string;
+  firstName: string;
+  password: string;
+}
+
 const LogInContent = () => {
+  const [user, setUser] = useState<string>();
+
+
+  const handleLogin = (data: UserInput)=>{
+    setUser(JSON.stringify(data));
+
+  }
   return (
     <Wrapper>
       <div className="section">
         <h3>Login</h3>
         <form className="log-form">
-          <input type="email" className="log-input" placeholder="enter email" />
+          <input type="email"  className="log-input" placeholder="enter email" />
           <input type="password" className="log-input" placeholder="enter password" />
-          <button type="submit" className="submit-btn">
+          <button type="submit" className="submit-btn" >
             Log-In
           </button>
         </form>

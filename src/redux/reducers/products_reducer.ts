@@ -1,3 +1,4 @@
+import { AnyAction } from 'redux'
 import {
   SIDEBAR_OPEN,
   SIDEBAR_CLOSE,
@@ -10,10 +11,10 @@ import {
 } from '../../redux/actions/action'
 
 import { initialStateType } from '../../context/products_context'
-import { productDataType } from '../../types'
+import { ProductDataType } from '../../types'
 
 
-const products_reducer = (state: initialStateType, action: any) => {
+const products_reducer = (state: initialStateType, action: AnyAction) => {
   if (action.type === SIDEBAR_OPEN) {
     return { ...state, isSidebarOpen: true }
   }
@@ -48,7 +49,7 @@ const products_reducer = (state: initialStateType, action: any) => {
     })
 
     const featuredProducts = allProducts.filter(
-      (product: productDataType) => product
+      (product: ProductDataType) => product
     )
 
     return { ...state, productsLoading: false, allProducts, featuredProducts }

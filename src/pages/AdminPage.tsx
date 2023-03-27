@@ -6,7 +6,7 @@ import AdminSidebar from '../components/AdminSidebar'
 import PageHero from '../components/PageHero'
 
 const AdminPage = () => {
-  const names = ['User', 'Products', 'Orders']
+
   return (
     <Wrapper>
       <PageHero title="Admin" />

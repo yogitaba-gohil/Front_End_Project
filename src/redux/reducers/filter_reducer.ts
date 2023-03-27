@@ -11,7 +11,7 @@ import {
     RESET_IS_CLICK_FROM_SERVICES,
   } from '../../redux/actions/action'
   import { initialStateType } from '../../context/filter_context'
-  import { productDataType } from '../../types'
+  import { ProductDataType } from '../../types'
   
   const filter_reducer = (
     state: initialStateType,
@@ -19,7 +19,7 @@ import {
   ) => {
     if (action.type === LOAD_PRODUCTS) {
       const maxPrice = Math.max(
-        ...action.payload.map((item: productDataType) => item.price)
+        ...action.payload.map((item: ProductDataType) => item.price)
       )
   
       return {
