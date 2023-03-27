@@ -1,4 +1,5 @@
 import React, { useEffect, useContext, useReducer } from 'react'
+
 import reducer from '../redux/reducers/filter_reducer'
 import {
   LOAD_PRODUCTS,
@@ -7,7 +8,7 @@ import {
   CLEAR_FILTERS
 } from '../redux/actions/action'
 import { useProductsContext } from './products_context'
-import { productDataType } from '../utils/productData'
+import { ProductDataType } from '../types'
 
 type filtersType = {
   searchTerm: string
@@ -20,8 +21,8 @@ export const defaultFilters: filtersType = {
 }
 
 export type initialStateType = {
-  filteredProducts: productDataType[]
-  allProducts: productDataType[]
+  filteredProducts: ProductDataType[]
+  allProducts: ProductDataType[]
   filters: filtersType
   updateFilters: (e: any) => void
   clearFilters: () => void

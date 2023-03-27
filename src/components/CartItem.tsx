@@ -1,10 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
+import { FaTrash } from 'react-icons/fa'
+import { Link } from 'react-router-dom'
+
 import { formatPrice } from '../utils/helpers'
 import AmountButtons from './AmountButtons'
-import { FaTrash } from 'react-icons/fa'
 import { cartType, useCartContext } from '../context/cart_context'
-import { Link } from 'react-router-dom'
 
 const CartItem: React.FC<{ cartItem: cartType }> = ({ cartItem }) => {
   const { id, image, name, price, amount, slug } = cartItem

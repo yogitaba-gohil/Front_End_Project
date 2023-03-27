@@ -1,8 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
+import { GoogleLogin } from '@react-oauth/google'
+
 import LogInContent from '../components/LogInContent'
 import PageHero from '../components/PageHero'
-import { GoogleLogin } from '@react-oauth/google'
 
 const LogInPage = () => {
   return (

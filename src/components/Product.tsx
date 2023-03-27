@@ -1,13 +1,15 @@
 import React from 'react'
 import styled from 'styled-components'
-import { formatPrice } from '../utils/helpers'
+
 import { FaSearch } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
-import { productDataType } from '../utils/productData'
+import { ProductDataType } from '../types'
+import { formatPrice } from '../utils/helpers'
 
-const Product: React.FC<{ product: productDataType }> = ({ product }) => {
-  const { image, name, price, slug } = product
-  // const image = images[0]
+const Product: React.FC<{ product: ProductDataType }> = ({ product }) => {
+  const { images, name, price, slug } = product
+  const image = images[0]
+
   return (
     <Wrapper>
       <div className='container'>

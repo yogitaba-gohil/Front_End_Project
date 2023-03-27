@@ -10,7 +10,7 @@ import {
 } from '../../redux/actions/action'
 
 import { initialStateType } from '../../context/products_context'
-import { productDataType } from '../../utils/productData'
+import { productDataType } from '../../types'
 
 
 const products_reducer = (state: initialStateType, action: any) => {

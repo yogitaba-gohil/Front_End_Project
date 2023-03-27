@@ -10,14 +10,14 @@ import {
   GET_SINGLE_PRODUCT_SUCCESS,
   GET_SINGLE_PRODUCT_ERROR
 } from '../redux/actions/action'
-import { productDataType } from '../utils/productData'
+import { ProductDataType } from '../types'
 
 export type initialStateType = {
   
   isSidebarOpen: boolean
-  allProducts: productDataType[] | []
-  featuredProducts: productDataType[] | []
-  singleProduct: productDataType | {}
+  allProducts: ProductDataType[] | []
+  featuredProducts: ProductDataType[] | []
+  singleProduct: ProductDataType | {}
   openSidebar: () => void
   closeSidebar: () => void
   fetchSingleProduct: (id: string) => void
@@ -61,8 +61,8 @@ export const ProductsProvider: React.FC<productProps> = ({ children }) => {
   const fetchSingleProduct = (slug: string) => {
     dispatch({ type: GET_SINGLE_PRODUCT_BEGIN })
     try {
-      const singleProduct: productDataType = state.allProducts.filter(
-        (product: productDataType) => product.slug === slug
+      const singleProduct: ProductDataType = state.allProducts.filter(
+        (product: ProductDataType) => product.slug === slug
       )[0]
       // running filter() on empty allProducts [] will result in undefined
       // this if clause guard against such case

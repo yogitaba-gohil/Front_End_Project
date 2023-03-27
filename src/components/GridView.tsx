@@ -1,10 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
+
 import Product from './Product'
-import { productDataType } from '../utils/productData'
+import { ProductDataType } from '../types'
 
 
-const GridView: React.FC<{ filteredProducts: productDataType[] }> = ({
+const GridView: React.FC<{ filteredProducts: ProductDataType[] }> = ({
   filteredProducts,
 }) => {
   return (

@@ -1,4 +1,4 @@
-import { productDataType, productDataTypeKey } from './productData'
+import { productDataType, productDataTypeKey } from '../types'
 
 export const formatPrice = (number: number) => {
   return Intl.NumberFormat('th-TH', {

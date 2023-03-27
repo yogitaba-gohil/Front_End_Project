@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
+
 import { useProductsContext } from '../../context/products_context'
 import  PageHero  from '../../components/PageHero'
 import Loading from '../../components/Loading'

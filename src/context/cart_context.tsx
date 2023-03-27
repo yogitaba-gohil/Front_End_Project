@@ -1,6 +1,6 @@
 import React, { useEffect, useContext, useReducer } from 'react'
 import reducer from '../redux/reducers/cart_reducer'
-import { productDataType } from '../utils/productData'
+import { ProductDataType } from '../types'
 import {
   ADD_TO_CART,
   REMOVE_CART_ITEM,
@@ -26,7 +26,7 @@ export type initialStateType = {
     id: string | undefined,
     slug: string | undefined,
     amount: number,
-    singleProduct: productDataType | {}
+    singleProduct: ProductDataType | {}
   ) => void
   removeItem: (id: string) => void
   toggleAmount: (id: string, value: string) => void
@@ -65,7 +65,7 @@ export const CartProvider: React.FC<cartProps> = ({ children }) => {
     id: string | undefined,
     slug: string | undefined,
     amount: number,
-    singleProduct: productDataType | {}
+    singleProduct: ProductDataType | {}
   ) => {
     dispatch({
       type: ADD_TO_CART,

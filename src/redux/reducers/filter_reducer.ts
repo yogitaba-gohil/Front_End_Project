@@ -11,7 +11,7 @@ import {
     RESET_IS_CLICK_FROM_SERVICES,
   } from '../../redux/actions/action'
   import { initialStateType } from '../../context/filter_context'
-  import { productDataType } from '../../utils/productData'
+  import { productDataType } from '../../types'
   
   const filter_reducer = (
     state: initialStateType,

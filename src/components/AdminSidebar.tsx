@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { PermIdentity, Storefront } from '@mui/icons-material'
-import { Link } from 'react-router-dom'
+
 function Sidebar() {
   return (
     <Wrapper>

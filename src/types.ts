@@ -1,4 +1,4 @@
-export type productDataType = {
+export type ProductDataType = {
     id: string
     name: string
     categories: string
@@ -8,4 +8,4 @@ export type productDataType = {
     description:string
   }
   
-  export type productDataTypeKey = keyof productDataType
+  export type productDataTypeKey = keyof ProductDataType

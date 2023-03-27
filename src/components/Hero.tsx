@@ -1,7 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
-import hero from '../assets/hero.jpg'
 import { Link } from 'react-router-dom'
+
+import hero from '../assets/hero.jpg'
 
 const Hero = () => {
   return (
