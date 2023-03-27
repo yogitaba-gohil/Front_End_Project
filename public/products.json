@@ -1,3 +1,64 @@
 {
-    "data":[{"id":1, "name": "ABC","description":"asc","categories":"Face","sizes":"small","images":["https://stock.adobe.com/fi/images/lipstick-beauty-make-up/58381204", "https://stock.adobe.com/fi/images/lipstick-beauty-make-up/58381204"],"price":100,"slug":"djsgdj"},{"id":2,"name": "ABC","description":"asc","categories":"Lips","sizes":"small", "images":["https://as1.ftcdn.net/v2/jpg/01/08/20/22/1000_F_108202241_82JGs1LyvHCCiLGWSkMKnDI8nXnq9gu8.jpg","https://stock.adobe.com/fi/images/lipstick-beauty-make-up/58381204"],"price":200,"slug":"djhgsjh"}]
+  "data": [
+    {
+      "id": 1,
+      "name": "ABC",
+      "description": "asc",
+      "categories": "Face",
+      "sizes": "small",
+      "images": [
+        "https://stock.adobe.com/fi/images/lipstick-beauty-make-up/58381204",
+        "https://stock.adobe.com/fi/images/lipstick-beauty-make-up/58381204"
+      ],
+      "price": 100,
+      "slug": "djsgdj"
+    },
+    {
+      "id": 2,
+      "name": "ABC",
+      "description": "asc",
+      "categories": "Lips",
+      "sizes": "small",
+      "images": [
+        "https://as1.ftcdn.net/v2/jpg/01/08/20/22/1000_F_108202241_82JGs1LyvHCCiLGWSkMKnDI8nXnq9gu8.jpg",
+        "https://stock.adobe.com/fi/images/lipstick-beauty-make-up/58381204"
+      ],
+      "price": 200,
+      "slug": "djhgsjh"
+    }
+  ],
+  
+  "users": [
+    {
+      "id": 0,
+      "firstName": "ABC",
+      "lastName": "ABC",
+      "email": "test@gmail.com",
+      "password": "12345",
+      "isAdmin": true
+    },
+    {
+      "id": 1,
+      "firstName": "wer",
+      "lastName": "wer",
+      "email": "wer@gmail.com",
+      "password": "12321",
+      "isAdmin": false
+    }
+  ],
+  "orders": [{
+    "orderId": 0,
+    "products": [
+      {
+        "productId": 0,
+        "amount": 2
+      },
+      {
+        "productId": 2,
+        "amount": 1
+      }
+    ],
+    "userId": 1,
+    "purchasedAt": "date"
+  }]
 }
