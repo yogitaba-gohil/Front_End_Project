@@ -1,28 +1,48 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
+import { useUserContext } from '../context/user_context'
 
-interface UserInput {
-  email: string;
-  firstName: string;
-  password: string;
+type Values = {
+  email: string
+  password: string
 }
 
 const LogInContent = () => {
-  const [user, setUser] = useState<string>();
+  const { login } = useUserContext()
 
+  const [user, setUser] = useState<Values>({
+    password: '',
+    email: ''
+  })
 
-  const handleLogin = (data: UserInput)=>{
-    setUser(JSON.stringify(data));
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setUser({ ...user, [event.target.name]: event.target.value })
+  }
 
+  const handleLogin = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    login(user)
   }
   return (
     <Wrapper>
       <div className="section">
         <h3>Login</h3>
-        <form className="log-form">
-          <input type="email"  className="log-input" placeholder="enter email" />
-          <input type="password" className="log-input" placeholder="enter password" />
-          <button type="submit" className="submit-btn" >
+        <form className="log-form" onSubmit={(e) => handleLogin(e)}>
+          <input
+            type="email"
+            name="email"
+            className="log-input"
+            placeholder="enter email"
+            onChange={handleChange}
+          />
+          <input
+            type="password"
+            name="password"
+            className="log-input"
+            placeholder="enter password"
+            onChange={handleChange}
+          />
+          <button type="submit" className="submit-btn">
             Log-In
           </button>
         </form>

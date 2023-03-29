@@ -24,7 +24,6 @@ const LogInPage = () => {
       <Wrapper className="page">
         <LogInContent />
       </Wrapper>
-      <GoogleLogin onSuccess={handleLogin} />
     </main>
   )
 }
