@@ -8,7 +8,6 @@ import {
   GET_USERS_ERROR,
   LOGGED_IN_BEGIN
 } from '../redux/actions/action'
-import { Email } from '@mui/icons-material'
 
 export type userType = {
   email: string

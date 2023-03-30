@@ -23,6 +23,7 @@ const user_reducer = (state: initialStateType, action: AnyAction) => {
         isAdmin
       }
     })
+    
     return { ...state, usersLoading: false, users: allUsers }
   }
   if (action.type === GET_USERS_ERROR) {

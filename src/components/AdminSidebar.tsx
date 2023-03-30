@@ -1,7 +1,10 @@
 import styled from 'styled-components'
 import { PermIdentity, Storefront } from '@mui/icons-material'
 
-function Sidebar() {
+function Sidebar(props:any) {
+  const onBtnClick = (arg: string) => {
+    props.handleChange(arg)
+  }
   return (
     <Wrapper>
       <div className="sidebar">
@@ -9,13 +12,13 @@ function Sidebar() {
           <div className="sidebarMenu">
             <h4 className="sidebarTitle">Dashboard</h4>
             <ul className="sidebarList">
-              <button className="link">
+              <button className="link" onClick={(e) => onBtnClick('users')}>
                 <li className="sidebarListItem">
                   <PermIdentity className="sidebarIcon" />
                   Users
                 </li>
               </button>
-              <button className="link">
+              <button className="link" onClick={(e) => onBtnClick('products')}>
                 <li className="sidebarListItem">
                   <Storefront className="sidebarIcon" />
                   Products

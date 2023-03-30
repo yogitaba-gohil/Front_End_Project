@@ -1,23 +1,25 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 
 import AdminContent from '../components/AdminContent'
 import AdminSidebar from '../components/AdminSidebar'
 import PageHero from '../components/PageHero'
+import UserContent from '../components/UserContent'
 
 const AdminPage = () => {
+  const [data, setData] = useState('admin')
 
+  const handleChange = (arg: string) => {
+    setData(arg)
+  }
   return (
     <Wrapper>
       <PageHero title="Admin" />
       <div className="content">
         <div className="select">
-          <AdminSidebar />
+          <AdminSidebar handleChange={handleChange} />
         </div>
-
-        <Wrapper className="page">
-          <AdminContent />
-        </Wrapper>
+        <Wrapper className="page">{data == 'admin' ? <AdminContent /> : <UserContent />}</Wrapper>
       </div>
     </Wrapper>
   )
