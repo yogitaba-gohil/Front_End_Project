@@ -12,9 +12,10 @@ const AdminContent = () => {
   const { allProducts } = useProductsContext()
   const [data, setData] = useState(allProducts)
 
+  console.log('data', data)
+
 useEffect(()=>{
   setData(allProducts)
-
 },[allProducts])
 
   const handleDelete = (id:any) => {
@@ -72,6 +73,7 @@ useEffect(()=>{
         rows={data}
         columns={columns}
         checkboxSelection
+        autoHeight
       />
     </div>
   </Wrapper>

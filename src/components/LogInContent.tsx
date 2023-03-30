@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
+import { Navigate } from 'react-router-dom'
 import { useUserContext } from '../context/user_context'
 
 type Values = {
@@ -8,20 +9,29 @@ type Values = {
 }
 
 const LogInContent = () => {
-  const { login } = useUserContext()
+  const { login, user, isAdmin } = useUserContext()
 
-  const [user, setUser] = useState<Values>({
+  console.log('useUserContext(', useUserContext())
+
+  const [newUser, setNewUser] = useState<Values>({
     password: '',
     email: ''
   })
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setUser({ ...user, [event.target.name]: event.target.value })
+    setNewUser({ ...newUser, [event.target.name]: event.target.value })
   }
 
   const handleLogin = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    login(user)
+    login(newUser)
+  }
+
+  if (user && isAdmin) {
+    return <Navigate to="/admin" />
+  }
+  if (user && !isAdmin) {
+    return <Navigate to="/products" />
   }
   return (
     <Wrapper>
