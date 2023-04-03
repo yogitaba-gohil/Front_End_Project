@@ -2,29 +2,87 @@
   "data": [
     {
       "id": 1,
-      "name": "ABC",
-      "description": "asc",
+      "name": "Loose powder",
+      "description": "for oily skin",
       "categories": "Face",
       "sizes": "small",
       "images": [
-        "https://stock.adobe.com/fi/images/lipstick-beauty-make-up/58381204",
-        "https://stock.adobe.com/fi/images/lipstick-beauty-make-up/58381204"
+        "https://img.freepik.com/free-photo/combination-makeup-textures_23-2150039180.jpg?w=1800&t=st=1680495245~exp=1680495845~hmac=11fcc9e1a8541fc6947d059b541e0ed6a5882136a2d729057e012da2d5a7a93d",
+        "https://img.freepik.com/free-photo/close-up-crushed-mineral-shimmer-powder-golden-color-with-makeup-brush_155003-6351.jpg?w=1800&t=st=1680495264~exp=1680495864~hmac=0c612a1fd385be96be180c8eea725749c2502494ab20b40ead30aa289ec1337d",
+        "https://img.freepik.com/free-photo/still-life-combination-makeup-textures_23-2150240957.jpg?w=1800&t=st=1680495284~exp=1680495884~hmac=342dd29e0ca4eb9ddd1c902e984ee19d68e17485e8af54cfe42186f32bd8fc5e"
       ],
       "price": 100,
-      "slug": "djsgdj"
+      "slug": "Powder"
     },
     {
       "id": 2,
-      "name": "ABC",
-      "description": "asc",
+      "name": "Lipstick",
+      "description": "best for all skin type",
       "categories": "Lips",
       "sizes": "small",
       "images": [
-        "https://as1.ftcdn.net/v2/jpg/01/08/20/22/1000_F_108202241_82JGs1LyvHCCiLGWSkMKnDI8nXnq9gu8.jpg",
-        "https://stock.adobe.com/fi/images/lipstick-beauty-make-up/58381204"
+        "https://img.freepik.com/free-photo/top-view-lipstick-with-brush_23-2149096695.jpg?w=1800&t=st=1680495143~exp=1680495743~hmac=1aeaf63a866d7bff19401e2de220c1ea8d37dfe7571c16963b2c00b37e9c27e4",
+        "https://img.freepik.com/free-psd/pink-brush-stroke-background-collection_53876-84531.jpg?w=1060&t=st=1680495171~exp=1680495771~hmac=b20a3c3bb4abb1b48633817a1ae06f3caf2929ecff6ebb8b3726675d6024f3c0",
+        "https://img.freepik.com/free-photo/top-view-lipsticks-arrangement-with-copy-space_23-2149096663.jpg?w=1800&t=st=1680495218~exp=1680495818~hmac=54f8d0ed4a885432c9051fdd8a3fce969cf993c7a49867ec81adcbcd53035a22"
       ],
       "price": 200,
-      "slug": "djhgsjh"
+      "slug": "lipstick"
+    },
+    {
+      "id": 3,
+      "name": "Foundation",
+      "description": "use right shade",
+      "categories": "Face",
+      "sizes": "small",
+      "images": [
+        "https://img.freepik.com/free-photo/woman-using-foundation-hand_23-2148553403.jpg?w=1380&t=st=1680494994~exp=1680495594~hmac=c49228832c72df3bb3e4fbba01f87317ecde0de3761051ddf3e1c2c584b43757",
+        "https://img.freepik.com/free-photo/makeup-artist-applying-liquid-tonal-foundation-face-woman_186202-5978.jpg?w=1800&t=st=1680495071~exp=1680495671~hmac=516be72aaac60a83f195504021a1afee34091f2338327d27c3f4544c4dd630e2",
+        "https://img.freepik.com/free-photo/brown-shades-skin-color-brush-strokes-social-media-post_53876-96893.jpg?w=1060&t=st=1680495094~exp=1680495694~hmac=ba868078e46dfd8737eb88eabd5514a410c9beea59556669932ea96a3cd9e428"
+      ],
+      "price": 100,
+      "slug": "foundation"
+    },
+    {
+      "id": 4,
+      "name": "Nail Polish",
+      "description": "use right shade and bright your day",
+      "categories": "Nail",
+      "sizes": "small",
+      "images": [
+       "https://img.freepik.com/free-photo/flat-lay-nail-care-products-arrangement_23-2149046527.jpg?w=826&t=st=1680495343~exp=1680495943~hmac=c5694afa2934d19570e2f6a4d3f4708ef900cdc06a8b2bceaa57e8b44811219a",
+       "https://img.freepik.com/free-photo/beauty-concept-pretty-woman-with-bright-pink-nail-color-manicure-wall_343596-6047.jpg?w=826&t=st=1680495435~exp=1680496035~hmac=29307692c0811335a3a6e2abde1e4a645992c87a1e17851896a42ad3764692a8",
+       "https://img.freepik.com/free-photo/hands-holding-container_1153-1644.jpg?w=1800&t=st=1680495458~exp=1680496058~hmac=f771510eb25f96a9c5f29445e84f44d7dde271c224bd07336782b538c6955667"
+      ],
+      "price": 100,
+      "slug": "nail"
+    },
+    {
+      "id": 5,
+      "name": "Eye Shadow",
+      "description": "use right shade and bright your day",
+      "categories": "Eyes",
+      "sizes": "small",
+      "images": [
+      "https://img.freepik.com/free-photo/view-eyeshadow-palette-with-cosmetic-powder_23-2150260881.jpg?w=1800&t=st=1680495572~exp=1680496172~hmac=b7769dda93e4426c6dfc926abdc050b0cb4280cc2faf5509c31650ad8bbec556",
+      "https://img.freepik.com/free-photo/still-life-combination-makeup-textures_23-2150240918.jpg?w=826&t=st=1680495592~exp=1680496192~hmac=bbbc0193672da4861a9824fe415a86380999af21a7f219a0720bddf3ef303b90",
+      "https://img.freepik.com/free-photo/high-angle-eyeshadow-palette_23-2149234356.jpg?w=826&t=st=1680495634~exp=1680496234~hmac=cf1f01014d5c887b901fe6558d7f41c413b0fc2663ee9bd27c10b22133cfe7cf"
+      ],
+      "price": 100,
+      "slug": "eye"
+    },
+    {
+      "id": 6 ,
+      "name": "Eye Liner",
+      "description": "use right shade and bright your day",
+      "categories": "Eyes",
+      "sizes": "small",
+      "images": [
+      "https://img.freepik.com/free-photo/top-view-mascara-with-copy-space_23-2149096687.jpg?w=1800&t=st=1680495788~exp=1680496388~hmac=257c428b0377a04de5d59495489892f54330e9b095f9bfd9b7ba1526a65904ce",
+      "https://img.freepik.com/free-photo/beautiful-young-adult-woman-applying-mascara-eyelashes-isolated-white_186202-5143.jpg?w=996&t=st=1680495853~exp=1680496453~hmac=ad98e816fd4b957dc8f0c0e79311ef70b30c8b8f9e84c05a0e9181111d2c88c7",
+      "https://img.freepik.com/free-photo/female-applying-eyeliner_23-2148553509.jpg?w=1380&t=st=1680495870~exp=1680496470~hmac=8ef07676910b960874fbcffcbe0e0f1a87c31359f12ecdbb4d35ef4186d2c4e7"
+      ],
+      "price": 100,
+      "slug": "liner"
     }
   ],
   
