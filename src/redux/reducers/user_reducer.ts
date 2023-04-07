@@ -16,11 +16,12 @@ const user_reducer = (state: initialStateType, action: AnyAction) => {
   }
   if (action.type === GET_USERS_SUCCESS) {
     const allUsers = action.payload.map((user: any) => {
-      let { email, password, isAdmin } = user
+      let { email, password, isAdmin , id} = user
       return {
         email,
         password,
-        isAdmin
+        isAdmin,
+        id
       }
     })
     

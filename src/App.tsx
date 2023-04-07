@@ -10,6 +10,8 @@ import CartPage from './pages/CartPage'
 import Sidebar from './components/Sidebar/Sidebar'
 import LogInPage from './pages/LogInPage'
 import AdminPage from './pages/AdminPage'
+import CheckoutPage from './pages/CheckoutPage'
+import ProtectedRoute from './components/ProtectedRoute'
 
 function App() {
   return (
@@ -21,7 +23,9 @@ function App() {
           <Route path="/products/:slug" element={<SingleProductPage />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/logIn" element={<LogInPage />} />
-          <Route path="/admin" element={<AdminPage />} />
+          <Route path="/admin" element={<ProtectedRoute> <AdminPage /> </ProtectedRoute>} />
+          <Route path="/checkout" element={<CheckoutPage />} />
+
 
         </Routes>
       </Layout>

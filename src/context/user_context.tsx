@@ -12,25 +12,25 @@ import {
 export type userType = {
   email: string
   password: string
+  id: string 
+  isAdmin: boolean 
 }
 export type initialStateType = {
-  users: userType[] | null
+  users: userType[] 
   isLoading: boolean
-  login: (user: userType) => void
+  login: (user: any) => void
   usersLoading: boolean
   usersError: boolean
-  user: userType[] | null
-  isAdmin: boolean
+  user: userType[] 
   userLoading: boolean
 }
 const initialState: initialStateType = {
-  users: null,
+  users: [],
   isLoading: false,
   login: () => {},
   usersLoading: false,
   usersError: false,
-  user: null,
-  isAdmin: false,
+  user: [] ,
   userLoading: false
 }
 
@@ -43,7 +43,7 @@ type userProps = {
 export const UserProvider: React.FC<userProps> = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState)
 
-  const login = (user: userType) => {
+  const login = (user:userType) => {
     dispatch({ type: LOGGED_IN_BEGIN })
     try {
       const newUser: userType = state.users.filter((item: userType) => item.email === user.email)

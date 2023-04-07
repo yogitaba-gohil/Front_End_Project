@@ -3,17 +3,9 @@ import styled from 'styled-components'
 import { Navigate } from 'react-router-dom'
 import { useUserContext } from '../context/user_context'
 
-type Values = {
-  email: string
-  password: string
-}
-
 const LogInContent = () => {
-  const { login, user, isAdmin } = useUserContext()
-
-  console.log('useUserContext(', useUserContext())
-
-  const [newUser, setNewUser] = useState<Values>({
+  const { login, user } = useUserContext()
+  const [newUser, setNewUser] = useState({
     password: '',
     email: ''
   })
@@ -27,12 +19,10 @@ const LogInContent = () => {
     login(newUser)
   }
 
-  if (user && isAdmin) {
-    return <Navigate to="/admin" />
+  if (user.length > 0) {
+    return user[0].isAdmin ? <Navigate to="/admin" /> : <Navigate to="/products" />
   }
-  if (user && !isAdmin) {
-    return <Navigate to="/products" />
-  }
+
   return (
     <Wrapper>
       <div className="section">

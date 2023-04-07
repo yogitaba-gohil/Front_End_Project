@@ -6,44 +6,43 @@ import { Link } from 'react-router-dom'
 
 import { useUserContext } from '../context/user_context'
 
-
-
 const UserContent = () => {
   const { users } = useUserContext()
-  const [allUsers, setAllUsers] = useState([])
-  console.log('users', users)
+  const [allUsers, setAllUsers] = useState(users)
 
-useEffect(()=>{
-    // setAllUsers(users)
-},[users])
+  useEffect(() => {
+    return setAllUsers(users)
+  }, [users])
 
-  const handleDelete = (id:any) => {
-    // setAllUsers(allUsers.filter((item) => item.id !== id))
+  const handleDelete = (email: any) => {
+    if (allUsers?.length) {
+      setAllUsers(allUsers.filter((item) => item.email !== email))
+    }
   }
   const columns = [
     { field: 'id', headerName: 'ID', width: 90 },
     {
-      field: 'product',
-      headerName: 'Product',
+      field: 'email',
+      headerName: 'Email',
       width: 200,
       renderCell: (params: any) => {
         console.log('params', params.row.name)
-        return (
-          <div className="productListItem">
-            {/* <img className="productListImg" src={params.row.img} alt="" /> */}
-            {params.row.name}
-          </div>
-        )
+        return <div className="productListItem">{params.row.email}</div>
       }
     },
     {
-      field: 'categories',
-      headerName: 'Category',
+      field: 'password',
+      headerName: 'Password',
       width: 160
-    }, {
-      field: 'price',
-      headerName: 'Price',
-      width: 160
+    },
+    {
+      field: 'role',
+      headerName: 'Role',
+      width: 160,
+      renderCell: (params: any) => {
+        console.log('params', params.row.isAdmin)
+        return <div className="productListItem">{params.row.isAdmin ? 'Admin' : 'user'}</div>
+      }
     },
     {
       field: 'action',
@@ -67,18 +66,12 @@ useEffect(()=>{
 
   return (
     <Wrapper>
-    <div className="productList">
-     <DataGrid
-        rows={allUsers}
-        columns={columns}
-        checkboxSelection
-        autoHeight
-      />
-    </div>
-  </Wrapper>
+      <div className="productList">
+        <DataGrid rows={allUsers} columns={columns} checkboxSelection autoHeight />
+      </div>
+    </Wrapper>
   )
 }
-
 
 const Wrapper = styled.div`
   .productList {
