@@ -8,12 +8,11 @@ import LogInButton from '../LogInButton'
 
 const Sidebar = () => {
   const { isSidebarOpen } = useProductsContext()
-  console.log('isSidebarOpen', isSidebarOpen)
   return (
     <SidebarContainer>
       <aside className={isSidebarOpen ? 'sidebar show-sidebar' : 'sidebar'}>
         <SidebarHeader />
-        <NavLinks className='links' isSidebar={true} />
+        <NavLinks className="links" isSidebar={true} />
         <CartButtons />
         <LogInButton />
       </aside>

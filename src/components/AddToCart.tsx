@@ -6,17 +6,12 @@ import { ProductDataType } from '../types'
 import { useCartContext } from '../context/cart_context'
 import AmountButtons from './AmountButtons'
 
-const AddToCart: React.FC<{ singleProduct: ProductDataType | {} }> = ({
-  singleProduct,
-}) => {
+const AddToCart: React.FC<{ singleProduct: ProductDataType | {} }> = ({ singleProduct }) => {
   const { addToCart } = useCartContext()
 
-  console.log('singleProduct', singleProduct)
-  // need the number of stock here as well after setting up in productData array
   const { id, slug } = { ...singleProduct }
   const [amount, setAmount] = useState(1)
 
-  // if there's stock variable, add logic to allow adding the amount === stock
   const increaseAmount = () => setAmount(amount + 1)
 
   const decreaseAmount = () => {
@@ -27,17 +22,9 @@ const AddToCart: React.FC<{ singleProduct: ProductDataType | {} }> = ({
 
   return (
     <Wrapper>
-      <div className='btn-container'>
-        <AmountButtons
-          amount={amount}
-          increase={increaseAmount}
-          decrease={decreaseAmount}
-        />
-        <Link
-          to='/cart'
-          className='btn'
-          onClick={() => addToCart(id, slug, amount, singleProduct)}
-        >
+      <div className="btn-container">
+        <AmountButtons amount={amount} increase={increaseAmount} decrease={decreaseAmount} />
+        <Link to="/cart" className="btn" onClick={() => addToCart(id, slug, amount, singleProduct)}>
           add to cart
         </Link>
       </div>

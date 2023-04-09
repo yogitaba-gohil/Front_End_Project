@@ -13,7 +13,6 @@ import {
   ) => {
     if (action.type === ADD_TO_CART) {
       const { id, slug, amount, singleProduct } = action.payload
-      console.log('first', singleProduct)
       const tempItem = state.cart.find(item => item.id === id)
   
       if (tempItem) {

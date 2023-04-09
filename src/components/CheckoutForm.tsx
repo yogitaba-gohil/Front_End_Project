@@ -6,15 +6,10 @@ import { formatPrice } from '../utils/helpers'
 
 export const CheckoutForm = () => {
   const { cart, totalAmount } = useCartContext()
-  console.log('totalAmount', totalAmount)
-  const [succeeded, setSucceeded] = useState(false) // if the payment succeeded
+  const [succeeded, setSucceeded] = useState(false)
   const [error, setError] = useState('') // error message
-  const [processing, setProcessing] = useState(false) // if the payment is processing
-  const [disabled, setDisabled] = useState(false) // disable the pay button
-
-  
-
-  // push to successful payment page
+  const [processing, setProcessing] = useState(false)
+  const [disabled, setDisabled] = useState(false)
 
   const handleChange = async (event: any) => {
     setDisabled(event.empty)
@@ -77,5 +72,3 @@ const Wrapper = styled.div`
 const TestCardDetails = styled.ul`
   color: var(--clr-primary-7);
 `
-
-

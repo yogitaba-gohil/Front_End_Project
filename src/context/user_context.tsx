@@ -56,14 +56,12 @@ export const UserProvider: React.FC<userProps> = ({ children }) => {
   }
   useEffect(() => {
     const fetchUsers = async () => {
-      console.log('first-----')
       dispatch({ type: GET_ALL_USERS })
       try {
         const queryResult = await fetch('http://localhost:5173/products.json')
         const result = await queryResult.json()
         dispatch({ type: GET_USERS_SUCCESS, payload: result.users })
       } catch (error) {
-        console.log(error)
         dispatch({ type: GET_USERS_ERROR })
       }
     }

@@ -26,7 +26,6 @@ const UserContent = () => {
       headerName: 'Email',
       width: 200,
       renderCell: (params: any) => {
-        console.log('params', params.row.name)
         return <div className="productListItem">{params.row.email}</div>
       }
     },
@@ -40,7 +39,6 @@ const UserContent = () => {
       headerName: 'Role',
       width: 160,
       renderCell: (params: any) => {
-        console.log('params', params.row.isAdmin)
         return <div className="productListItem">{params.row.isAdmin ? 'Admin' : 'user'}</div>
       }
     },

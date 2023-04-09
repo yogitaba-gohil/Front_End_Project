@@ -8,6 +8,7 @@ import {
   GET_SINGLE_PRODUCT_BEGIN,
   GET_SINGLE_PRODUCT_SUCCESS,
   GET_SINGLE_PRODUCT_ERROR,
+  REMOVE_PRODUCT
 } from '../../redux/actions/action'
 
 import { initialStateType } from '../../context/products_context'
@@ -66,6 +67,9 @@ const products_reducer = (state: initialStateType, action: AnyAction) => {
   }
   if (action.type === GET_SINGLE_PRODUCT_ERROR){
     return { ...state, singleProductError: true, singleProductLoading: false}
+  }
+  if(action.type === REMOVE_PRODUCT){
+    return {...state, allProducts: action.payload}
   }
   // return state
   throw new Error(`No Matching "${action.type}" - action type`)

@@ -8,7 +8,8 @@ import {
   GET_PRODUCTS_ERROR,
   GET_SINGLE_PRODUCT_BEGIN,
   GET_SINGLE_PRODUCT_SUCCESS,
-  GET_SINGLE_PRODUCT_ERROR
+  GET_SINGLE_PRODUCT_ERROR,
+  REMOVE_PRODUCT
 } from '../redux/actions/action'
 import { ProductDataType } from '../types'
 
@@ -21,6 +22,7 @@ export type initialStateType = {
   openSidebar: () => void
   closeSidebar: () => void
   fetchSingleProduct: (id: string) => void
+  removeProduct:(id: string) => void
   productsLoading: boolean
   productsError: boolean
   singleProductLoading: boolean
@@ -40,6 +42,8 @@ const initialState: initialStateType = {
   productsError: false,
   singleProductLoading: false,
   singleProductError: false,
+  removeProduct: (id: string) => {},
+
 }
 
 const ProductsContext = React.createContext<initialStateType>(initialState)
@@ -57,8 +61,15 @@ export const ProductsProvider: React.FC<productProps> = ({ children }) => {
   const closeSidebar = () => {
     dispatch({ type: SIDEBAR_CLOSE })
   }
+  const removeProduct =(id:string) =>{
+    const newProducts: ProductDataType = state.allProducts.filter(
+      (product: ProductDataType) => product.id !== id
+    )
+    dispatch({type:REMOVE_PRODUCT, payload:newProducts})
+  }
 
   const fetchSingleProduct = (slug: string) => {
+    
     dispatch({ type: GET_SINGLE_PRODUCT_BEGIN })
     try {
       const singleProduct: ProductDataType = state.allProducts.filter(
@@ -70,7 +81,6 @@ export const ProductsProvider: React.FC<productProps> = ({ children }) => {
         dispatch({ type: GET_SINGLE_PRODUCT_SUCCESS, payload: singleProduct })
       }
     } catch (error) {
-      console.log(error)
       dispatch({ type: GET_SINGLE_PRODUCT_ERROR })
     }
   }
@@ -83,14 +93,13 @@ export const ProductsProvider: React.FC<productProps> = ({ children }) => {
         const result = await queryResult.json()
         dispatch({ type: GET_PRODUCTS_SUCCESS, payload: result.data })
       } catch (error) {
-        console.log(error)
         dispatch({ type: GET_PRODUCTS_ERROR })
       }
     }
     fetchProducts()
   }, [])
 
-  return <ProductsContext.Provider value={{ ...state, fetchSingleProduct,openSidebar, closeSidebar, }}>{children}</ProductsContext.Provider>
+  return <ProductsContext.Provider value={{ ...state, fetchSingleProduct,openSidebar, closeSidebar, removeProduct}}>{children}</ProductsContext.Provider>
 }
 
 export const useProductsContext = () => {

@@ -6,20 +6,16 @@ import { Link } from 'react-router-dom'
 
 import { useProductsContext } from '../context/products_context'
 
-
-
 const AdminContent = () => {
-  const { allProducts } = useProductsContext()
+  const { allProducts, removeProduct } = useProductsContext()
   const [data, setData] = useState(allProducts)
 
-  console.log('data', data)
+  useEffect(() => {
+    setData(allProducts)
+  }, [allProducts])
 
-useEffect(()=>{
-  setData(allProducts)
-},[allProducts])
-
-  const handleDelete = (id:any) => {
-    setData(data.filter((item) => item.id !== id))
+  const handleDelete = (id: any) => {
+    removeProduct(id)
   }
   const columns = [
     { field: 'id', headerName: 'ID', width: 90 },
@@ -28,20 +24,15 @@ useEffect(()=>{
       headerName: 'Product',
       width: 200,
       renderCell: (params: any) => {
-        console.log('params', params.row.name)
-        return (
-          <div className="productListItem">
-            {/* <img className="productListImg" src={params.row.img} alt="" /> */}
-            {params.row.name}
-          </div>
-        )
+        return <div className="productListItem">{params.row.name}</div>
       }
     },
     {
       field: 'categories',
       headerName: 'Category',
       width: 160
-    }, {
+    },
+    {
       field: 'price',
       headerName: 'Price',
       width: 160
@@ -68,18 +59,12 @@ useEffect(()=>{
 
   return (
     <Wrapper>
-    <div className="productList">
-     <DataGrid
-        rows={data}
-        columns={columns}
-        checkboxSelection
-        autoHeight
-      />
-    </div>
-  </Wrapper>
+      <div className="productList">
+        <DataGrid rows={data} columns={columns} checkboxSelection autoHeight />
+      </div>
+    </Wrapper>
   )
 }
-
 
 const Wrapper = styled.div`
   .productList {
