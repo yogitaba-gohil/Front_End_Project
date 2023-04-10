@@ -20,7 +20,7 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/products" element={<ProductsPage />} />
-          <Route path="/products/:slug" element={<SingleProductPage />} />
+          <Route path="/products/:id" element={<SingleProductPage />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/logIn" element={<LogInPage />} />
           <Route path="/admin" element={<ProtectedRoute> <AdminPage /> </ProtectedRoute>} />

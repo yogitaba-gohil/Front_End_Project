@@ -1,4 +1,4 @@
-import { productDataType, productDataTypeKey } from '../types'
+import { ProductDataType, productDataTypeKey } from '../types'
 
 export const formatPrice = (number: number) => {
   return Intl.NumberFormat('th-TH', {
@@ -7,7 +7,7 @@ export const formatPrice = (number: number) => {
   }).format(number)
 }
 export const getUniqueValues = (
-  data: productDataType[],
+  data: ProductDataType[],
   category: productDataTypeKey,
   noAllValue?: boolean
 ) => {
@@ -20,3 +20,7 @@ export const getUniqueValues = (
   }
   return ['all', ...Array.from(new Set(unique))]
 }
+
+export const isObjectEmpty = (objectName:object) => {
+  return JSON.stringify(objectName) === "{}";
+};

@@ -2,13 +2,15 @@ import { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { DataGrid } from '@mui/x-data-grid'
 import { DeleteOutline } from '@mui/icons-material'
-import { Link } from 'react-router-dom'
 
 import { useProductsContext } from '../context/products_context'
+import EditProductPage from './EditProductPage'
 
 const AdminContent = () => {
   const { allProducts, removeProduct } = useProductsContext()
   const [data, setData] = useState(allProducts)
+  const [isEdit, setIsEdit] = useState(false)
+  const [productId, setProductId] = useState()
 
   useEffect(() => {
     setData(allProducts)
@@ -16,6 +18,14 @@ const AdminContent = () => {
 
   const handleDelete = (id: any) => {
     removeProduct(id)
+  }
+  const handleEdit = (id: any, arg: boolean) => {
+    setProductId(id)
+    setIsEdit(arg)
+  }
+  const handleAdd = (arg: boolean) => {
+    console.log('arg', arg)
+    setIsEdit(arg)  
   }
   const columns = [
     { field: 'id', headerName: 'ID', width: 90 },
@@ -44,9 +54,9 @@ const AdminContent = () => {
       renderCell: (params: any) => {
         return (
           <>
-            <Link to={'/product/' + params.row.id}>
-              <button className="productListEdit">Edit</button>
-            </Link>
+            <button className="productListEdit" onClick={() => handleEdit(params.row.id, true)}>
+              Edit
+            </button>
             <DeleteOutline
               className="productListDelete"
               onClick={() => handleDelete(params.row.id)}
@@ -60,7 +70,16 @@ const AdminContent = () => {
   return (
     <Wrapper>
       <div className="productList">
-        <DataGrid rows={data} columns={columns} checkboxSelection autoHeight />
+        {isEdit ? (
+          <EditProductPage handleEdit={handleEdit} productId={productId}  />
+        ) : (
+          <div>
+            <div className="buttonContainer">
+              <button className="productAddButton" onClick={()=>handleAdd(true)}>Add</button>
+            </div>{' '}
+            <DataGrid rows={data} columns={columns} checkboxSelection autoHeight />{' '}
+          </div>
+        )}
       </div>
     </Wrapper>
   )
@@ -70,12 +89,27 @@ const Wrapper = styled.div`
   .productList {
     flex: 4;
   }
+  .buttonContainer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
 
   .productListItem {
     display: flex;
     align-items: center;
   }
-
+  .productAddButton {
+    width: 80px;
+    border: none;
+    padding: 5px;
+    background-color: teal;
+    color: white;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 10px;
+  }
   .productListImg {
     width: 32px;
     height: 32px;
@@ -100,3 +134,6 @@ const Wrapper = styled.div`
   }
 `
 export default AdminContent
+function fetchSingleProduct(id: any) {
+  throw new Error('Function not implemented.')
+}

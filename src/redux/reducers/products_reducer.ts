@@ -8,7 +8,7 @@ import {
   GET_SINGLE_PRODUCT_BEGIN,
   GET_SINGLE_PRODUCT_SUCCESS,
   GET_SINGLE_PRODUCT_ERROR,
-  REMOVE_PRODUCT
+  REMOVE_PRODUCT,
 } from '../../redux/actions/action'
 
 import { initialStateType } from '../../context/products_context'
@@ -35,6 +35,7 @@ const products_reducer = (state: initialStateType, action: AnyAction) => {
         description,
         categories,
         price,
+        sizes,
         images, //need to flatten
       } = product
 
@@ -44,6 +45,7 @@ const products_reducer = (state: initialStateType, action: AnyAction) => {
         slug,
         categories,
         price,
+        sizes,
         images,
         description
       }

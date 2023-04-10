@@ -9,12 +9,11 @@ import {
   GET_SINGLE_PRODUCT_BEGIN,
   GET_SINGLE_PRODUCT_SUCCESS,
   GET_SINGLE_PRODUCT_ERROR,
-  REMOVE_PRODUCT
+  REMOVE_PRODUCT,
 } from '../redux/actions/action'
 import { ProductDataType } from '../types'
 
 export type initialStateType = {
-  
   isSidebarOpen: boolean
   allProducts: ProductDataType[] | []
   featuredProducts: ProductDataType[] | []
@@ -22,15 +21,16 @@ export type initialStateType = {
   openSidebar: () => void
   closeSidebar: () => void
   fetchSingleProduct: (id: string) => void
-  removeProduct:(id: string) => void
+  removeProduct: (id: string) => void
   productsLoading: boolean
   productsError: boolean
   singleProductLoading: boolean
   singleProductError: boolean
+  udpateProductDetails:(arg:object) =>void
+
 }
 
 const initialState: initialStateType = {
-
   isSidebarOpen: false,
   allProducts: [],
   featuredProducts: [],
@@ -43,7 +43,7 @@ const initialState: initialStateType = {
   singleProductLoading: false,
   singleProductError: false,
   removeProduct: (id: string) => {},
-
+  udpateProductDetails:(arg:object) =>{}
 }
 
 const ProductsContext = React.createContext<initialStateType>(initialState)
@@ -61,22 +61,19 @@ export const ProductsProvider: React.FC<productProps> = ({ children }) => {
   const closeSidebar = () => {
     dispatch({ type: SIDEBAR_CLOSE })
   }
-  const removeProduct =(id:string) =>{
+  const removeProduct = (id: string) => {
     const newProducts: ProductDataType = state.allProducts.filter(
       (product: ProductDataType) => product.id !== id
     )
-    dispatch({type:REMOVE_PRODUCT, payload:newProducts})
+    dispatch({ type: REMOVE_PRODUCT, payload: newProducts })
   }
 
-  const fetchSingleProduct = (slug: string) => {
-    
+  const fetchSingleProduct = (id: string) => {
     dispatch({ type: GET_SINGLE_PRODUCT_BEGIN })
     try {
       const singleProduct: ProductDataType = state.allProducts.filter(
-        (product: ProductDataType) => product.slug === slug
+        (product: ProductDataType) => product.id == id
       )[0]
-      // running filter() on empty allProducts [] will result in undefined
-      // this if clause guard against such case
       if (singleProduct) {
         dispatch({ type: GET_SINGLE_PRODUCT_SUCCESS, payload: singleProduct })
       }
@@ -85,6 +82,17 @@ export const ProductsProvider: React.FC<productProps> = ({ children }) => {
     }
   }
 
+  const udpateProductDetails = (updateProduct:any) =>{
+    const product = state.allProducts.find((product:any) => product.id === updateProduct.id)
+    const updatedProductList = product ? [updateProduct,
+        ...state.allProducts.filter((product:any) => product.id !== updateProduct.id)
+      ] : [...state.allProducts,updateProduct ]
+
+      if(updatedProductList) {
+      dispatch({ type: GET_PRODUCTS_SUCCESS, payload: updatedProductList })
+      }
+
+  }
   useEffect(() => {
     const fetchProducts = async () => {
       dispatch({ type: GET_PRODUCTS_BEGIN })
@@ -99,10 +107,14 @@ export const ProductsProvider: React.FC<productProps> = ({ children }) => {
     fetchProducts()
   }, [])
 
-  return <ProductsContext.Provider value={{ ...state, fetchSingleProduct,openSidebar, closeSidebar, removeProduct}}>{children}</ProductsContext.Provider>
+  return (
+    <ProductsContext.Provider
+      value={{ ...state, fetchSingleProduct, openSidebar, closeSidebar, removeProduct, udpateProductDetails }}>
+      {children}
+    </ProductsContext.Provider>
+  )
 }
 
 export const useProductsContext = () => {
   return useContext(ProductsContext)
 }
-

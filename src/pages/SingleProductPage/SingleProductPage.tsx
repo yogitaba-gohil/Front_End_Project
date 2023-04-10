@@ -1,17 +1,17 @@
 import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
+import styled from 'styled-components'
 
 import { useProductsContext } from '../../context/products_context'
 import  PageHero  from '../../components/PageHero'
 import Loading from '../../components/Loading'
-import styled from 'styled-components'
 import { BackToProductsButton } from './BackToProductsButton'
 import { SingleProductContent } from './SingleProductContent'
 import ErrorPage from '../ErrorPage'
 import ProductImages from '../../components/ProductImages'
 
 const SingleProductPage = () => {
-  const { slug } = useParams<{ slug: string }>()
+  const { id } = useParams<{ id: string }>()
   const {
     singleProduct,
     fetchSingleProduct,
@@ -25,11 +25,11 @@ const SingleProductPage = () => {
   // when page refreshes, allProducts changes from [] to an array of data from API
   // so if state of allProducts changes, run this useEffect too for the case of page refresh
   useEffect(() => {
-    if (slug) {
-      fetchSingleProduct(slug)
+    if (id) {
+      fetchSingleProduct(id)
     }
     // eslint-disable-next-line
-  }, [slug, allProducts])
+  }, [id, allProducts])
 
   if (singleProductLoading) {
     return <Loading />

@@ -7,13 +7,13 @@ import { ProductDataType } from '../types'
 import { formatPrice } from '../utils/helpers'
 
 const Product: React.FC<{ product: ProductDataType }> = ({ product }) => {
-  const { images, name, price, slug } = product
+  const { images, name, price, slug , id} = product
   const image = images[0]
 
   return (
     <Wrapper>
       <div className='container'>
-        <Link to={`/products/${slug}`}>
+        <Link to={`/products/${id}`}>
           <img src={image} alt={name} />
           <div className='link'>
             <FaSearch />
