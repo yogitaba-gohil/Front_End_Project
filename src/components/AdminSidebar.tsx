@@ -24,6 +24,12 @@ function Sidebar(props:any) {
                   Products
                 </li>
               </button>
+              <button className="link" onClick={(e) => onBtnClick('orders')}>
+                <li className="sidebarListItem">
+                  <Storefront className="sidebarIcon" />
+                  Orders
+                </li>
+              </button>
             </ul>
           </div>
         </div>

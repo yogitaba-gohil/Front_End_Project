@@ -7,6 +7,7 @@ import {
   TOGGLE_CART_ITEM_AMOUNT,
   CLEAR_CART,
   COUNT_CART_TOTALS,
+  ADD_TO_ORDER,
 } from '../redux/actions/action'
 
 export type cartType = {
@@ -16,6 +17,12 @@ export type cartType = {
   amount: number
   image: string
   price: number
+}
+export type orderType ={
+  products: [] | any
+  userId:string
+  createdAt: string
+  id:number
 }
 
 export type initialStateType = {
@@ -31,6 +38,8 @@ export type initialStateType = {
   removeItem: (id: string) => void
   toggleAmount: (id: string, value: string) => void
   clearCart: () => void
+  orders:orderType[]
+  addToOrder:(orders:orderType)=>void
 }
 
 const getLocalStorage: () => [] | cartType[] = () => {
@@ -50,6 +59,8 @@ const initialState = {
   removeItem: () => {},
   toggleAmount: () => {},
   clearCart: () => {},
+  orders:[],
+  addToOrder:()=>{}
 }
 
 const CartContext = React.createContext<initialStateType>(initialState)
@@ -77,6 +88,12 @@ export const CartProvider: React.FC<cartProps> = ({ children }) => {
     dispatch({ type: REMOVE_CART_ITEM, payload: id })
   }
 
+  const addToOrder =(orders:orderType) =>{
+    const updatedOrderList =  [...state.orders,orders ]
+    dispatch({ type: ADD_TO_ORDER, payload:updatedOrderList  })
+
+  }
+
   const toggleAmount = (id: string, value: string) => {
     dispatch({ type: TOGGLE_CART_ITEM_AMOUNT, payload: { id, value } })
   }
@@ -93,7 +110,7 @@ export const CartProvider: React.FC<cartProps> = ({ children }) => {
 
   return (
     <CartContext.Provider
-      value={{ ...state, addToCart, removeItem, toggleAmount, clearCart }}
+      value={{ ...state, addToCart, removeItem, toggleAmount, clearCart, addToOrder }}
     >
       {children}
     </CartContext.Provider>

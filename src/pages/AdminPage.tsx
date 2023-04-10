@@ -5,6 +5,7 @@ import AdminContent from '../components/AdminContent'
 import AdminSidebar from '../components/AdminSidebar'
 import PageHero from '../components/PageHero'
 import UserContent from '../components/UserContent'
+import OrderContent from '../components/OrderContent'
 
 const AdminPage = () => {
   const [data, setData] = useState('products')
@@ -19,7 +20,7 @@ const AdminPage = () => {
         <div className="select">
           <AdminSidebar handleChange={handleChange} />
         </div>
-        <Wrapper className="page">{data == 'products' ? <AdminContent /> : <UserContent /> }</Wrapper>
+        <Wrapper className="page">{data == 'products' ? <AdminContent /> : data == 'users' ? <UserContent /> : <OrderContent />}</Wrapper>
       </div>
     </Wrapper>
   )

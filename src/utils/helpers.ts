@@ -21,6 +21,9 @@ export const getUniqueValues = (
   return ['all', ...Array.from(new Set(unique))]
 }
 
-export const isObjectEmpty = (objectName:object) => {
-  return JSON.stringify(objectName) === "{}";
-};
+export function getFields(input: string | any[], field: string | number) {
+  var output = "";
+  for (var i=0; i < input.length ; ++i)
+      output = (input[i][field]);
+  return output;
+}

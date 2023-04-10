@@ -1,6 +1,6 @@
 import FormField from "./FormField";
 
-const BillingDetailsFields = () => {
+const BillingDetailsFields = (props: { handleChange: any; }) => {
   return (
     <>
       <FormField
@@ -9,6 +9,7 @@ const BillingDetailsFields = () => {
         type="text"
         placeholder="yogitaba gohil"
         required
+        onChange={props.handleChange}
       />
       <FormField
         name="email"
@@ -16,6 +17,8 @@ const BillingDetailsFields = () => {
         type="email"
         placeholder="tast@basicbeauty.com"
         required
+        onChange={props.handleChange}
+
       />
       <FormField
         name="address"
@@ -23,6 +26,8 @@ const BillingDetailsFields = () => {
         type="text"
         placeholder="Herwanta"
         required
+        onChange={props.handleChange}
+
       />
       <FormField
         name="city"
@@ -30,6 +35,8 @@ const BillingDetailsFields = () => {
         type="text"
         placeholder="Tampere"
         required
+        onChange={props.handleChange}
+
       />
       
       <FormField
@@ -37,6 +44,8 @@ const BillingDetailsFields = () => {
         label="ZIP"
         type="text"
         placeholder="33700"
+        onChange={props.handleChange}
+
       />
       <FormField
         name="country"
@@ -44,6 +53,8 @@ const BillingDetailsFields = () => {
         type="text"
         placeholder="Finland"
         required
+        onChange={props.handleChange}
+
       />
     </>
   );

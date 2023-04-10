@@ -1,34 +1,50 @@
 import React, { useState } from 'react'
-import { useCartContext } from '../context/cart_context'
 import styled from 'styled-components'
+import { useNavigate } from 'react-router-dom'
+
+import { useCartContext } from '../context/cart_context'
 import BillingDetailsFields from './BillingDetailsFields'
 import { formatPrice } from '../utils/helpers'
+import { useUserContext } from '../context/user_context'
+import { getFields } from '../utils/helpers'
 
 export const CheckoutForm = () => {
-  const { cart, totalAmount } = useCartContext()
+  const { cart, totalAmount, addToOrder, orders } = useCartContext()
+  const { user } = useUserContext()
   const [succeeded, setSucceeded] = useState(false)
   const [error, setError] = useState('') // error message
   const [processing, setProcessing] = useState(false)
-  const [disabled, setDisabled] = useState(false)
+  const [billingDetails, setBillingDetails] = useState({})
 
-  const handleChange = async (event: any) => {
-    setDisabled(event.empty)
-    setError(event.error ? event.error.message : '')
+  const navigate = useNavigate()
+
+  const handleChange = (event: any) => {
+    const target = event.target
+    const value = target.value
+    const name = target.name
+    setBillingDetails((prevState) => {
+      return {
+        ...prevState,
+        [name]: value
+      }
+    })
   }
+  const UserId = getFields(user, 'id')
 
   const handleSubmit = async (event: any) => {
     event.preventDefault()
     setProcessing(true)
+    const today = new Date(),
+      date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
 
-    const billingDetails = {
-      name: event.target.name.value,
-      email: event.target.email.value,
-      address: {
-        city: event.target.city.value,
-        line1: event.target.address.value,
-        state: event.target.state.value,
-        postal_code: event.target.zip.value
-      }
+    const order = { products: cart, id: orders.length + 1, createdAt: date, userId: UserId }
+
+    if (billingDetails) {
+      setError('')
+      setProcessing(false)
+      setSucceeded(true)
+      addToOrder(order) // re-route to successful payment page
+      return navigate('/successful_payment')
     }
   }
 
@@ -36,7 +52,7 @@ export const CheckoutForm = () => {
     <Wrapper>
       <form id="payment-form" onSubmit={handleSubmit}>
         <h4>enter billing details:</h4>
-        <BillingDetailsFields />
+        <BillingDetailsFields handleChange={handleChange} />
 
         <h4>card details for test:</h4>
         <TestCardDetails>

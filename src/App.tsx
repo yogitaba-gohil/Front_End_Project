@@ -12,6 +12,7 @@ import LogInPage from './pages/LogInPage'
 import AdminPage from './pages/AdminPage'
 import CheckoutPage from './pages/CheckoutPage'
 import ProtectedRoute from './components/ProtectedRoute'
+import SuccessfulPayment from './pages/SuccessfulPaymentPage'
 
 function App() {
   return (
@@ -23,10 +24,17 @@ function App() {
           <Route path="/products/:id" element={<SingleProductPage />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/logIn" element={<LogInPage />} />
-          <Route path="/admin" element={<ProtectedRoute> <AdminPage /> </ProtectedRoute>} />
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute>
+                {' '}
+                <AdminPage />{' '}
+              </ProtectedRoute>
+            }
+          />
           <Route path="/checkout" element={<CheckoutPage />} />
-
-
+          <Route path="/successful_payment" element={<SuccessfulPayment />} />
         </Routes>
       </Layout>
     </Router>

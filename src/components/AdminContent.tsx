@@ -24,8 +24,7 @@ const AdminContent = () => {
     setIsEdit(arg)
   }
   const handleAdd = (arg: boolean) => {
-    console.log('arg', arg)
-    setIsEdit(arg)  
+    setIsEdit(arg)
   }
   const columns = [
     { field: 'id', headerName: 'ID', width: 90 },
@@ -71,11 +70,13 @@ const AdminContent = () => {
     <Wrapper>
       <div className="productList">
         {isEdit ? (
-          <EditProductPage handleEdit={handleEdit} productId={productId}  />
+          <EditProductPage handleEdit={handleEdit} productId={productId} />
         ) : (
           <div>
             <div className="buttonContainer">
-              <button className="productAddButton" onClick={()=>handleAdd(true)}>Add</button>
+              <button className="productAddButton" onClick={() => handleAdd(true)}>
+                Add
+              </button>
             </div>{' '}
             <DataGrid rows={data} columns={columns} checkboxSelection autoHeight />{' '}
           </div>
@@ -134,6 +135,3 @@ const Wrapper = styled.div`
   }
 `
 export default AdminContent
-function fetchSingleProduct(id: any) {
-  throw new Error('Function not implemented.')
-}
