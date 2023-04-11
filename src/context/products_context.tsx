@@ -11,13 +11,13 @@ import {
   GET_SINGLE_PRODUCT_ERROR,
   REMOVE_PRODUCT,
 } from '../redux/actions/action'
-import { ProductDataType } from '../types'
+import { ProductDataType, SingleProductDataType } from '../types'
 
 export type initialStateType = {
   isSidebarOpen: boolean
   allProducts: ProductDataType[] | []
   featuredProducts: ProductDataType[] | []
-  singleProduct: ProductDataType | {}
+  singleProduct: SingleProductDataType
   openSidebar: () => void
   closeSidebar: () => void
   fetchSingleProduct: (id: string) => void
@@ -34,7 +34,16 @@ const initialState: initialStateType = {
   isSidebarOpen: false,
   allProducts: [],
   featuredProducts: [],
-  singleProduct: {},
+  singleProduct: {
+    id: "",
+    name: "",
+    categories: "",
+    price: 0,
+    images: [],
+    slug:"",
+    description:"",
+    sizes: ""
+  },
   openSidebar: () => {},
   closeSidebar: () => {},
   fetchSingleProduct: (id: string) => {},

@@ -4,11 +4,28 @@ import styled from '@emotion/styled'
 import { useProductsContext } from '../context/products_context'
 import Loading from './Loading'
 import ErrorPage from '../pages/ErrorPage'
+import { ProductDataType } from '../types'
 
 function EditProductPage(props: any) {
-  const { singleProduct, fetchSingleProduct, singleProductLoading, singleProductError, udpateProductDetails } =
-    useProductsContext()
-  const [productData, setProductData] = useState({})
+  const {
+    singleProduct,
+    fetchSingleProduct,
+    singleProductLoading,
+    singleProductError,
+    udpateProductDetails
+  } = useProductsContext()
+  const [productData, setProductData] = useState({
+    id: "",
+    name: "",
+    categories: "",
+    price: 0,
+    images: [],
+    slug:"",
+    description:"",
+    sizes: "",
+    
+  })
+
 
   useEffect(() => {
     if (props.productId) {
@@ -20,7 +37,7 @@ function EditProductPage(props: any) {
   const handleBack = () => {
     props.handleEdit('', false)
   }
- 
+
   const handleChange = (event: any) => {
     const target = event.target
     const value = target.value
@@ -34,11 +51,10 @@ function EditProductPage(props: any) {
     })
   }
 
-  const handleUpdateProductDetails = (event: Event ) => {
-    event.preventDefault();
+  const handleUpdateProductDetails = (event: any) => {
+    event.preventDefault()
     udpateProductDetails(productData)
     props.handleEdit('', false)
-
   }
 
   if (singleProductLoading) {
@@ -53,27 +69,24 @@ function EditProductPage(props: any) {
           <div className="productTitleContainer">
             <h1 className="productTitle">Product</h1>
             <div className="buttonContainer">
-            <button className="productAddButton" onClick={handleBack}>
-              Back
-            </button>
-
+              <button className="productAddButton" onClick={handleBack}>
+                Back
+              </button>
             </div>
-           
-            
           </div>
           <div className="productBottom">
             <form className="productForm">
-            <div className="productFormLeft">
+              <div className="productFormLeft">
                 <label>Id</label>
                 <input
                   type="text"
                   placeholder="Enter Product Id"
                   name="id"
-                  defaultValue={productData.id}
+                  defaultValue={productData.id }
                   onChange={(event) => handleChange(event)}
                 />
               </div>
-              
+
               <div className="productFormLeft">
                 <label>Name</label>
                 <input
@@ -139,8 +152,9 @@ function EditProductPage(props: any) {
                 <input type="text" placeholder="Apple AirPod" value={productData.images[0]} />
               </div> */}
               <div className="productFormRight">
-                
-                <button className="productButton" onClick={(event) => handleUpdateProductDetails(event)}>
+                <button
+                  className="productButton"
+                  onClick={(event) => handleUpdateProductDetails(event)}>
                   Update
                 </button>
               </div>
@@ -162,13 +176,11 @@ const Wrapper = styled.div`
     align-items: center;
     justify-content: space-between;
   }
-.buttonContainer{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  
-
-}
+  .buttonContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
   .productAddButton {
     width: 80px;
     border: none;
@@ -179,7 +191,6 @@ const Wrapper = styled.div`
     font-size: 16px;
     cursor: pointer;
     margin: 10px;
-
   }
 
   .productBottom {
