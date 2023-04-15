@@ -1,33 +1,44 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { Link, Navigate } from 'react-router-dom'
-import { useUserContext } from '../context/user_context'
+import { FormControlLabel, Switch } from '@mui/material'
 
-const LogInContent = () => {
-  const { login, user } = useUserContext()
-  const [newUser, setNewUser] = useState({
+const SignUpContent = () => {
+  const [addUser, setAddUser] = useState({
+    fname: '',
+    lname: '',
     password: '',
-    email: ''
+    email: '',
+    isAdmin: false
   })
+  const handleIsAdmin = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setAddUser({
+      ...addUser,
+      [event.target.name]: event.target.checked
+    })
+  }
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setNewUser({ ...newUser, [event.target.name]: event.target.value })
+    setAddUser({ ...addUser, [event.target.name]: event.target.value })
   }
-
-  const handleLogin = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    login(newUser)
-  }
-
-  if (user.length > 0) {
-    return user[0].isAdmin ? <Navigate to="/admin" /> : <Navigate to="/products" />
-  }
-
   return (
     <Wrapper>
       <div className="section">
-        <h3>Login</h3>
-        <form className="log-form" onSubmit={(e) => handleLogin(e)}>
+        <h3>Sign Up</h3>
+        <form className="log-form">
+          <input
+            type="text"
+            name="fname"
+            className="log-input"
+            placeholder="enter your  first name"
+            onChange={handleChange}
+          />
+          <input
+            type="text"
+            name="lname"
+            className="log-input"
+            placeholder="enter your  last name"
+            onChange={handleChange}
+          />
           <input
             type="email"
             name="email"
@@ -42,16 +53,19 @@ const LogInContent = () => {
             placeholder="enter password"
             onChange={handleChange}
           />
+          <FormControlLabel
+            control={<Switch onChange={handleIsAdmin} name="isAdmin" checked={addUser.isAdmin} />}
+            label="Admin"
+          />
+
           <button type="submit" className="submit-btn">
-            Log-In
+            Sign-Up
           </button>
-          Not a member? <Link to="/signUp">Register</Link>
         </form>
       </div>
     </Wrapper>
   )
 }
-
 const Wrapper = styled.section`
   h3 {
     text-align: center;
@@ -113,4 +127,4 @@ const Wrapper = styled.section`
   }
 `
 
-export default LogInContent
+export default SignUpContent

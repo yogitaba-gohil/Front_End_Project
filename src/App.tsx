@@ -13,6 +13,7 @@ import AdminPage from './pages/AdminPage'
 import CheckoutPage from './pages/CheckoutPage'
 import ProtectedRoute from './components/ProtectedRoute'
 import SuccessfulPayment from './pages/SuccessfulPaymentPage'
+import SignUpPage from './pages/SignUpPage'
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
           />
           <Route path="/checkout" element={<CheckoutPage />} />
           <Route path="/successful_payment" element={<SuccessfulPayment />} />
+          <Route path='/signUp' element={<SignUpPage />} />
         </Routes>
       </Layout>
     </Router>
