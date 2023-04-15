@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useReducer } from 'react'
 import reducer from '../redux/reducers/user_reducer'
 import {
   LOGGED_IN,
-  LOGGED_OUT,
+  SIGN_UP,
   GET_ALL_USERS,
   GET_USERS_SUCCESS,
   GET_USERS_ERROR,
@@ -12,25 +12,29 @@ import {
 export type userType = {
   email: string
   password: string
-  id: string 
-  isAdmin: boolean 
+  id: string
+  isAdmin: boolean
+  fname: string | null
+  lname: string | null
 }
 export type initialStateType = {
-  users: userType[] 
+  users: userType[]
   isLoading: boolean
   login: (user: any) => void
+  addNewUser: (user: any) => void
   usersLoading: boolean
   usersError: boolean
-  user: userType[] 
+  user: userType[]
   userLoading: boolean
 }
 const initialState: initialStateType = {
   users: [],
   isLoading: false,
   login: () => {},
+  addNewUser: () => {},
   usersLoading: false,
   usersError: false,
-  user: [] ,
+  user: [],
   userLoading: false
 }
 
@@ -43,12 +47,24 @@ type userProps = {
 export const UserProvider: React.FC<userProps> = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState)
 
-  const login = (user:userType) => {
+  const login = (user: userType) => {
     dispatch({ type: LOGGED_IN_BEGIN })
     try {
       const newUser: userType = state.users.filter((item: userType) => item.email === user.email)
       if (newUser) {
         dispatch({ type: LOGGED_IN, payload: newUser })
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  const addNewUser = (user: userType) => {
+    dispatch({ type: LOGGED_IN_BEGIN })
+    try {
+      user['id'] = state.users.length + 1 ;
+      const isUserExit: userType = state.users.includes(user.email)
+      if (!isUserExit) {
+        dispatch({ type: SIGN_UP, payload: user })
       }
     } catch (error) {
       console.log(error)
@@ -68,7 +84,9 @@ export const UserProvider: React.FC<userProps> = ({ children }) => {
     fetchUsers()
   }, [])
 
-  return <UserContext.Provider value={{ ...state, login }}>{children}</UserContext.Provider>
+  return (
+    <UserContext.Provider value={{ ...state, login, addNewUser }}>{children}</UserContext.Provider>
+  )
 }
 export const useUserContext = () => {
   return useContext(UserContext)

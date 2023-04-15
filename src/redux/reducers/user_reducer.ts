@@ -7,7 +7,8 @@ import {
   GET_ALL_USERS,
   GET_USERS_SUCCESS,
   GET_USERS_ERROR,
-  LOGGED_IN_BEGIN
+  LOGGED_IN_BEGIN,
+  SIGN_UP
 } from '../actions/action'
 
 const user_reducer = (state: initialStateType, action: AnyAction) => {
@@ -32,6 +33,13 @@ const user_reducer = (state: initialStateType, action: AnyAction) => {
   }
   if (action.type === LOGGED_IN_BEGIN) {
     return { ...state, userLoading: true }
+  }
+  if(action.type === SIGN_UP){
+    return {
+      ...state,
+      users: [...state.users, action.payload]
+    }
+    
   }
   if (action.type === LOGGED_IN) {
     return {

@@ -1,8 +1,15 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { FormControlLabel, Switch } from '@mui/material'
+import { useNavigate } from "react-router-dom";
+
+
+import { useUserContext } from '../context/user_context'
 
 const SignUpContent = () => {
+  const { addNewUser, users } = useUserContext()
+  const navigate = useNavigate();
+
   const [addUser, setAddUser] = useState({
     fname: '',
     lname: '',
@@ -20,11 +27,18 @@ const SignUpContent = () => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setAddUser({ ...addUser, [event.target.name]: event.target.value })
   }
+
+  const handleSignUp = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    addNewUser(addUser)
+    navigate("/logIn");
+
+  }
   return (
     <Wrapper>
       <div className="section">
         <h3>Sign Up</h3>
-        <form className="log-form">
+        <form className="log-form" onSubmit={(e) => handleSignUp(e)}>
           <input
             type="text"
             name="fname"
