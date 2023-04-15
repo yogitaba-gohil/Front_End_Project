@@ -65,7 +65,7 @@ const UserContent = () => {
   return (
     <Wrapper>
       <div className="productList">
-        <DataGrid rows={allUsers} columns={columns} checkboxSelection autoHeight />
+        <DataGrid rows={allUsers} columns={columns} checkboxSelection autoHeight   hideFooter={true}/>
       </div>
     </Wrapper>
   )

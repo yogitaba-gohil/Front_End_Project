@@ -6,7 +6,7 @@ const FormField: React.FC<{
   name: string
   placeholder: string
   required?: boolean
-  onChange:()=>{}
+  onChange:()=>void
 }> = ({ label, type, name, placeholder, required, onChange }) => {
   return (
     <FormFieldContainer>

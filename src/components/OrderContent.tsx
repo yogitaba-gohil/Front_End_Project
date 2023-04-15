@@ -8,12 +8,6 @@ import { useCartContext } from '../context/cart_context'
 const OrderContent = () => {
   const { orders } = useCartContext()
   
-  const [data, setData] = useState(orders)
-
-  useEffect(() => {
-    setData(orders)
-  }, [orders])
-
  
   const columns = [
     { field: 'id', headerName: 'OrderID', width: 90 },
@@ -49,7 +43,7 @@ const OrderContent = () => {
       <div className="productList">
         
           <div>
-            <DataGrid rows={data} columns={columns} checkboxSelection autoHeight />
+            <DataGrid rows={orders} columns={columns} checkboxSelection autoHeight  hideFooter={true} />
           </div>
         
       </div>

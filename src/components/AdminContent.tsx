@@ -78,7 +78,7 @@ const AdminContent = () => {
                 Add
               </button>
             </div>{' '}
-            <DataGrid rows={data} columns={columns} checkboxSelection autoHeight />{' '}
+            <DataGrid rows={data} columns={columns} checkboxSelection autoHeight  hideFooter={true} />{' '}
           </div>
         )}
       </div>
