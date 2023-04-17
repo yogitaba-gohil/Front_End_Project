@@ -18,12 +18,6 @@ export const NavLinks: React.FC<{ className: string; isSidebar?: boolean }> = ({
           </li>
         )
       })}
-      {/* 'checkout' only available in sidebar, not in Navbar */}
-      {isSidebar && (
-        <li onClick={closeSidebar}>
-          <Link to="/checkout">checkout</Link>
-        </li>
-      )}
     </ul>
   )
 }
