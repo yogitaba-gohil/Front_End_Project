@@ -8,6 +8,9 @@ import {
   CLEAR_CART,
   COUNT_CART_TOTALS,
   ADD_TO_ORDER,
+  GET_ALL_ORDERS,
+  GET_ORDERS_SUCCESS,
+  GET_ORDERS_ERROR
 } from '../redux/actions/action'
 
 export type cartType = {
@@ -40,6 +43,7 @@ export type initialStateType = {
   clearCart: () => void
   orders:orderType[]
   addToOrder:(orders:orderType)=>void
+  orderLoading:boolean
 }
 
 const getLocalStorage: () => [] | cartType[] = () => {
@@ -60,7 +64,8 @@ const initialState = {
   toggleAmount: () => {},
   clearCart: () => {},
   orders:[],
-  addToOrder:()=>{}
+  addToOrder:()=>{},
+  orderLoading:false
 }
 
 const CartContext = React.createContext<initialStateType>(initialState)
@@ -101,7 +106,19 @@ export const CartProvider: React.FC<cartProps> = ({ children }) => {
   const clearCart = () => {
     dispatch({ type: CLEAR_CART })
   }
-
+  useEffect(() => {
+    const fetchOrders = async () => {
+      dispatch({ type: GET_ALL_ORDERS })
+      try {
+        const queryResult = await fetch('http://localhost:5173/products.json')
+        const result = await queryResult.json()
+        dispatch({ type: GET_ORDERS_SUCCESS, payload: result.orders })
+      } catch (error) {
+        dispatch({ type: GET_ORDERS_ERROR })
+      }
+    }
+    fetchOrders()
+  }, [])
   // when the cart changes, store the changes to localStorage + re-calculate total amount in cart
   useEffect(() => {
     localStorage.setItem('cart', JSON.stringify(state.cart))

@@ -7,8 +7,7 @@ import { useCartContext } from '../context/cart_context'
 
 const OrderContent = () => {
   const { orders } = useCartContext()
-  
- 
+   
   const columns = [
     { field: 'id', headerName: 'OrderID', width: 90 },
     { field: 'userId', headerName: 'UserID', width: 90 },
@@ -19,12 +18,12 @@ const OrderContent = () => {
       width: 200,
       renderCell: (params: any) => {
         return <div className="productListItem">
-          {params.row.products.map((product:any)=>(
-            <div key={product.id}>
+          {params.row.products.map((product:any)=>{
+           return <div key={product.id}>
               {product.id} &nbsp;
               </div>
 
-          ))}
+      })}
 
         </div>
       }

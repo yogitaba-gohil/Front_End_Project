@@ -105,18 +105,18 @@
     }
   ],
   "orders": [{
-    "orderId": 0,
+    "id": 1,
     "products": [
       {
-        "productId": 0,
+        "id": 0,
         "amount": 2
       },
       {
-        "productId": 2,
+        "id": 2,
         "amount": 1
       }
     ],
     "userId": 1,
-    "createdAt": "date"
+    "createdAt": "2023-4-17"
   }]
 }
