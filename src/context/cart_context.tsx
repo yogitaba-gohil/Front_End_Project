@@ -44,6 +44,7 @@ export type initialStateType = {
   orders:orderType[]
   addToOrder:(orders:orderType)=>void
   orderLoading:boolean
+  ordersError:boolean
 }
 
 const getLocalStorage: () => [] | cartType[] = () => {
@@ -65,7 +66,8 @@ const initialState = {
   clearCart: () => {},
   orders:[],
   addToOrder:()=>{},
-  orderLoading:false
+  orderLoading:false,
+  ordersError: false
 }
 
 const CartContext = React.createContext<initialStateType>(initialState)

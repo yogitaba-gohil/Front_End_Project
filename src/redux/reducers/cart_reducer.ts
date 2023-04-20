@@ -6,7 +6,8 @@ import {
   REMOVE_CART_ITEM,
   TOGGLE_CART_ITEM_AMOUNT,
   GET_ORDERS_SUCCESS,
-  GET_ALL_ORDERS
+  GET_ALL_ORDERS,
+  GET_ORDERS_ERROR
 } from '../actions/action'
 import { initialStateType, cartType } from '../../context/cart_context'
 
@@ -47,6 +48,10 @@ const cart_reducer = (state: initialStateType, action: { type: any; payload?: an
   }
   if(action.type === GET_ORDERS_SUCCESS){
     return {...state, orders: action.payload}
+  }
+  if(action.type === GET_ORDERS_ERROR){
+    return { ...state, ordersError: true, orderLoading: false }
+
   }
   if (action.type === REMOVE_CART_ITEM) {
     const tempCart = state.cart.filter((cartItem) => cartItem.id !== action.payload)
