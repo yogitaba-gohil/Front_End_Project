@@ -53,12 +53,9 @@ export const UserProvider: React.FC<userProps> = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState)
 
   const login = async(user: userType) => {
-    console.log('user', user)
     dispatch({ type: LOGGED_IN_BEGIN })
     try {
-      console.log('first')
       const queryResult = await api.post('/users/signin', user)
-      console.log('queryResult.data', queryResult.data)
       localStorage.setItem('token', queryResult.data)
       getTokenFromLocalStorage()
         dispatch({ type: LOGGED_IN, payload: queryResult.data })
@@ -81,14 +78,11 @@ export const UserProvider: React.FC<userProps> = ({ children }) => {
   }
   useEffect(() => {
     const token = localStorage.getItem("token");
-    console.log('token', token)
     const fetchUsers = async () => {
       dispatch({ type: GET_ALL_USERS })
       try {
 
         const queryResult = await apiWithHeader.get('/users')
-        console.log('queryResult.data', queryResult.data)
-
         dispatch({ type: GET_USERS_SUCCESS, payload: queryResult })
       } catch (error) {
         dispatch({ type: GET_USERS_ERROR })

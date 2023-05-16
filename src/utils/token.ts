@@ -3,7 +3,6 @@ import { isDecodedUser } from './type-guards'
 
 export function getTokenFromLocalStorage() {
   const token = typeof localStorage !== 'undefined' ? localStorage.getItem('token') : null
-  console.log('token', token)
   if (!token) return null
   const decodedUser = jwtDecode(token)
 

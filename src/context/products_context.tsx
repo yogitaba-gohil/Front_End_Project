@@ -111,7 +111,6 @@ export const ProductsProvider: React.FC<productProps> = ({ children }) => {
       try {
         const queryResult = await api.get('/products')
         const result = await queryResult.data
-        console.log('result', result)
         dispatch({ type: GET_PRODUCTS_SUCCESS, payload: result })
       } catch (error) {
         dispatch({ type: GET_PRODUCTS_ERROR })

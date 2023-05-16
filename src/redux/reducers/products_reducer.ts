@@ -51,7 +51,6 @@ const products_reducer = (state: initialStateType, action: AnyAction) => {
         description
       }
     })
-    console.log('allProducts', allProducts)
 
 
     const featuredProducts = allProducts.filter(

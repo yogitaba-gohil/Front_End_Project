@@ -10,8 +10,6 @@ const UserContent = () => {
   const { users } = useUserContext()
   const [allUsers, setAllUsers] = useState(users)
 
-  console.log('allUsers', allUsers)
-
   useEffect(() => {
     return setAllUsers(users)
   }, [users])
