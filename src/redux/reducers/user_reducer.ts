@@ -11,6 +11,7 @@ import {
   SIGN_UP
 } from '../actions/action'
 
+
 const user_reducer = (state: initialStateType, action: AnyAction) => {
   if (action.type === GET_ALL_USERS) {
     return { ...state, usersLoading: true }

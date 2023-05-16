@@ -1,10 +1,14 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Link, Navigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+
 import { useUserContext } from '../context/user_context'
+
 
 const LogInContent = () => {
   const { login, user } = useUserContext()
+  const navigate = useNavigate()
   const [newUser, setNewUser] = useState({
     password: '',
     email: ''
@@ -14,14 +18,21 @@ const LogInContent = () => {
     setNewUser({ ...newUser, [event.target.name]: event.target.value })
   }
 
-  const handleLogin = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleLogin = async(event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    login(newUser)
+    const postData = {
+      username:newUser.email,
+      password:newUser.password
+    }
+   
+    login(postData);
+    navigate('/')
   }
 
   if (user.length > 0) {
-    return user[0].isAdmin ? <Navigate to="/admin" /> : <Navigate to="/products" />
+    return user[0].isAdmin ? <Navigate to="/" /> : null
   }
+
 
   return (
     <Wrapper>
@@ -29,7 +40,7 @@ const LogInContent = () => {
         <h3>Login</h3>
         <form className="log-form" onSubmit={(e) => handleLogin(e)}>
           <input
-            type="email"
+            type="text"
             name="email"
             className="log-input"
             placeholder="enter email"

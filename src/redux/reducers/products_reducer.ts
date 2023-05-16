@@ -39,6 +39,7 @@ const products_reducer = (state: initialStateType, action: AnyAction) => {
         images, //need to flatten
       } = product
 
+
       return {
         id,
         name,
@@ -50,6 +51,8 @@ const products_reducer = (state: initialStateType, action: AnyAction) => {
         description
       }
     })
+    console.log('allProducts', allProducts)
+
 
     const featuredProducts = allProducts.filter(
       (product: ProductDataType) => product

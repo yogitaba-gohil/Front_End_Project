@@ -4,9 +4,8 @@ import { useUserContext } from '../context/user_context'
 
 const ProtectedRoute = ({ children }: PropsWithChildren) => {
   const { user } = useUserContext()
-
-  if (!user.length) {
-    return <Navigate to="/" replace />
+  if (!user) {
+    return <Navigate to="/logIn" replace />
   }
   return <>{children}</>
 }

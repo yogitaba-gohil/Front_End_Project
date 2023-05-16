@@ -20,8 +20,8 @@ function App() {
     <Router>
       <Layout>
         <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/products" element={<ProductsPage />} />
+          <Route path="/" element={ <ProtectedRoute> <HomePage /></ProtectedRoute>} />
+          <Route path="/products" element={ <ProtectedRoute><ProductsPage /> </ProtectedRoute>} />
           <Route path="/products/:id" element={<SingleProductPage />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/logIn" element={<LogInPage />} />

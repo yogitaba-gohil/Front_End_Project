@@ -8,14 +8,18 @@ import {
   GET_USERS_ERROR,
   LOGGED_IN_BEGIN
 } from '../redux/actions/action'
+import { DecodedUser } from '../utils/type-guards'
+import { api, apiWithHeader } from '../utils/api'
+import { getTokenFromLocalStorage } from '../utils/token'
 
 export type userType = {
   email: string
   password: string
-  id: string
-  isAdmin: boolean
+  isAdmin: boolean | null
   fname: string | null
   lname: string | null
+  id:string
+  token:string
 }
 export type initialStateType = {
   users: userType[]
@@ -29,6 +33,7 @@ export type initialStateType = {
 }
 const initialState: initialStateType = {
   users: [],
+
   isLoading: false,
   login: () => {},
   addNewUser: () => {},
@@ -47,21 +52,25 @@ type userProps = {
 export const UserProvider: React.FC<userProps> = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState)
 
-  const login = (user: userType) => {
+  const login = async(user: userType) => {
+    console.log('user', user)
     dispatch({ type: LOGGED_IN_BEGIN })
     try {
-      const newUser: userType = state.users.filter((item: userType) => item.email === user.email)
-      if (newUser) {
-        dispatch({ type: LOGGED_IN, payload: newUser })
-      }
+      console.log('first')
+      const queryResult = await api.post('/users/signin', user)
+      console.log('queryResult.data', queryResult.data)
+      localStorage.setItem('token', queryResult.data)
+      getTokenFromLocalStorage()
+        dispatch({ type: LOGGED_IN, payload: queryResult.data })
     } catch (error) {
       console.log(error)
     }
   }
+ 
   const addNewUser = (user: userType) => {
     dispatch({ type: LOGGED_IN_BEGIN })
     try {
-      user['id'] = state.users.length + 1 ;
+      user['id'] = state.users.length + 1
       const isUserExit: userType = state.users.includes(user.email)
       if (!isUserExit) {
         dispatch({ type: SIGN_UP, payload: user })
@@ -71,17 +80,24 @@ export const UserProvider: React.FC<userProps> = ({ children }) => {
     }
   }
   useEffect(() => {
+    const token = localStorage.getItem("token");
+    console.log('token', token)
     const fetchUsers = async () => {
       dispatch({ type: GET_ALL_USERS })
       try {
-        const queryResult = await fetch('http://localhost:5173/products.json')
-        const result = await queryResult.json()
-        dispatch({ type: GET_USERS_SUCCESS, payload: result.users })
+
+        const queryResult = await apiWithHeader.get('/users')
+        console.log('queryResult.data', queryResult.data)
+
+        dispatch({ type: GET_USERS_SUCCESS, payload: queryResult })
       } catch (error) {
         dispatch({ type: GET_USERS_ERROR })
       }
     }
-    fetchUsers()
+    if(token){
+      fetchUsers()
+
+    }
   }, [])
 
   return (

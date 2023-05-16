@@ -12,6 +12,7 @@ import {
   REMOVE_PRODUCT,
 } from '../redux/actions/action'
 import { ProductDataType, SingleProductDataType } from '../types'
+import { api, apiWithHeader } from '../utils/api'
 
 export type initialStateType = {
   isSidebarOpen: boolean
@@ -27,6 +28,7 @@ export type initialStateType = {
   singleProductLoading: boolean
   singleProductError: boolean
   udpateProductDetails:(arg:object) =>void
+  fetchProducts:()=>void
 
 }
 
@@ -52,7 +54,8 @@ const initialState: initialStateType = {
   singleProductLoading: false,
   singleProductError: false,
   removeProduct: (id: string) => {},
-  udpateProductDetails:(arg:object) =>{}
+  udpateProductDetails:(arg:object) =>{},
+  fetchProducts:()=>{}
 }
 
 const ProductsContext = React.createContext<initialStateType>(initialState)
@@ -102,23 +105,24 @@ export const ProductsProvider: React.FC<productProps> = ({ children }) => {
       }
 
   }
-  useEffect(() => {
+  
     const fetchProducts = async () => {
       dispatch({ type: GET_PRODUCTS_BEGIN })
       try {
-        const queryResult = await fetch('http://localhost:5173/products.json')
-        const result = await queryResult.json()
-        dispatch({ type: GET_PRODUCTS_SUCCESS, payload: result.data })
+        const queryResult = await api.get('/products')
+        const result = await queryResult.data
+        console.log('result', result)
+        dispatch({ type: GET_PRODUCTS_SUCCESS, payload: result })
       } catch (error) {
         dispatch({ type: GET_PRODUCTS_ERROR })
       }
     }
-    fetchProducts()
-  }, [])
+   
+  
 
   return (
     <ProductsContext.Provider
-      value={{ ...state, fetchSingleProduct, openSidebar, closeSidebar, removeProduct, udpateProductDetails }}>
+      value={{ ...state, fetchSingleProduct, openSidebar, closeSidebar, removeProduct, udpateProductDetails, fetchProducts }}>
       {children}
     </ProductsContext.Provider>
   )

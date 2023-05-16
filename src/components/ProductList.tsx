@@ -8,6 +8,9 @@ const ProductList = () => {
   const { productsLoading } = useProductsContext()
   const { filteredProducts } = useFilterContext()
 
+  console.log('filteredProducts', filteredProducts)
+
+
   if (productsLoading) {
     return <Loading />
   }
