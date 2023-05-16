@@ -73,8 +73,9 @@ const products_reducer = (state: initialStateType, action: AnyAction) => {
     return { ...state, singleProductError: true, singleProductLoading: false}
   }
   if(action.type === REMOVE_PRODUCT){
-    return {...state, allProducts: action.payload}
+    return {...state, productsLoading: true}
   }
+  
   // return state
   throw new Error(`No Matching "${action.type}" - action type`)
 }

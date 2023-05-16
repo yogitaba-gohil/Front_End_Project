@@ -73,38 +73,40 @@ export const ProductsProvider: React.FC<productProps> = ({ children }) => {
   const closeSidebar = () => {
     dispatch({ type: SIDEBAR_CLOSE })
   }
-  const removeProduct = (id: string) => {
-    const newProducts: ProductDataType = state.allProducts.filter(
-      (product: ProductDataType) => product.id !== id
-    )
-    dispatch({ type: REMOVE_PRODUCT, payload: newProducts })
+  const removeProduct = async (id: string) => {
+
+    const deleteProduct = await api.delete(`/products/${id}`)
+    if(deleteProduct.status){
+      fetchProducts()
+    }
+    dispatch({ type: REMOVE_PRODUCT, payload: deleteProduct.status })
   }
 
-  const fetchSingleProduct = (id: string) => {
-    dispatch({ type: GET_SINGLE_PRODUCT_BEGIN })
+  const fetchSingleProduct =async (id: string) => {
+    // dispatch({ type: GET_SINGLE_PRODUCT_BEGIN })
     try {
-      const singleProduct: ProductDataType = state.allProducts.filter(
-        (product: ProductDataType) => product.id == id
-      )[0]
-      if (singleProduct) {
-        dispatch({ type: GET_SINGLE_PRODUCT_SUCCESS, payload: singleProduct })
+      const singleProduct = await api.get(`/products/${id}`)
+      if (singleProduct.data) {
+        dispatch({ type: GET_SINGLE_PRODUCT_SUCCESS, payload: singleProduct.data })
       }
     } catch (error) {
       dispatch({ type: GET_SINGLE_PRODUCT_ERROR })
     }
   }
 
-  const udpateProductDetails = (updateProduct:any) =>{
-    const product = state.allProducts.find((product:any) => product.id === updateProduct.id)
-    const updatedProductList = product ? [updateProduct,
-        ...state.allProducts.filter((product:any) => product.id !== updateProduct.id)
-      ] : [...state.allProducts,updateProduct ]
+  const udpateProductDetails = async(updateProduct:any) =>{
+    const updatedProduct = await api.put('/products',updateProduct);
+    // const product = state.allProducts.find((product:any) => product.id === updateProduct.id)
+    // const updatedProductList = product ? [updateProduct,
+    //     ...state.allProducts.filter((product:any) => product.id !== updateProduct.id)
+    //   ] : [...state.allProducts,updateProduct ]
 
-      if(updatedProductList) {
-      dispatch({ type: GET_PRODUCTS_SUCCESS, payload: updatedProductList })
+      if(updatedProduct.data) {
+        fetchProducts()
+      }
       }
 
-  }
+  
   
     const fetchProducts = async () => {
       dispatch({ type: GET_PRODUCTS_BEGIN })

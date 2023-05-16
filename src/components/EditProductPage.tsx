@@ -26,13 +26,11 @@ function EditProductPage(props: any) {
     
   })
 
-
-  useEffect(() => {
-    if (props.productId) {
+  useEffect(() => { 
       fetchSingleProduct(props.productId)
       setProductData(singleProduct)
-    }
-  }, [props.id, singleProduct])
+    
+  }, [props.productId, singleProduct])
 
   const handleBack = () => {
     props.handleEdit('', false)
