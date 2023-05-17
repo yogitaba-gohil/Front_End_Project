@@ -10,6 +10,7 @@ const AdminContent = () => {
   const { allProducts, removeProduct } = useProductsContext()
   const [data, setData] = useState(allProducts)
   const [isEdit, setIsEdit] = useState(false)
+  const [isAdd, setIsAdd] = useState(false)
   const [productId, setProductId] = useState()
 
   useEffect(() => {
@@ -25,6 +26,7 @@ const AdminContent = () => {
   }
   const handleAdd = (arg: boolean) => {
     setIsEdit(arg)
+    setIsAdd(true)
   }
   const columns = [
     { field: 'id', headerName: 'ID', width: 90 },
@@ -70,7 +72,7 @@ const AdminContent = () => {
     <Wrapper>
       <div className="productList">
         {isEdit ? (
-          <EditProductPage handleEdit={handleEdit} productId={productId} />
+          <EditProductPage handleEdit={handleEdit} productId={productId} isAdd={isAdd} />
         ) : (
           <div>
             <div className="buttonContainer">

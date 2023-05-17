@@ -12,24 +12,30 @@ function EditProductPage(props: any) {
     fetchSingleProduct,
     singleProductLoading,
     singleProductError,
-    udpateProductDetails
+    udpateProductDetails,
+    addNewProduct
   } = useProductsContext()
   const [productData, setProductData] = useState({
-    id: "",
-    name: "",
-    categories: "",
+    id: '',
+    name: '',
+    categoryId: '',
     price: 0,
     images: [],
-    slug:"",
-    description:"",
-    sizes: "",
-    
+    slug: '',
+    description: '',
+    sizes: '',
+    isAvailable: true,
+    variants:''
+  
   })
 
-  useEffect(() => { 
+  console.log('props', props)
+
+  useEffect(() => {
+    if (props.productId) {
       fetchSingleProduct(props.productId)
       setProductData(singleProduct)
-    
+    }
   }, [props.productId, singleProduct])
 
   const handleBack = () => {
@@ -51,8 +57,14 @@ function EditProductPage(props: any) {
 
   const handleUpdateProductDetails = (event: any) => {
     event.preventDefault()
-    udpateProductDetails(productData)
+
     props.handleEdit('', false)
+    if (props.isAdd) {
+      addNewProduct(productData)
+    } else {
+      productData.isAvailable = true;
+      udpateProductDetails(productData)
+    }
   }
 
   if (singleProductLoading) {
@@ -80,7 +92,7 @@ function EditProductPage(props: any) {
                   type="text"
                   placeholder="Enter Product Id"
                   name="id"
-                  defaultValue={productData.id }
+                  defaultValue={productData.id}
                   onChange={(event) => handleChange(event)}
                 />
               </div>
@@ -110,8 +122,8 @@ function EditProductPage(props: any) {
                 <input
                   type="text"
                   placeholder="Enter Product Categories"
-                  name="categories"
-                  defaultValue={productData.categories}
+                  name="categoryId"
+                  defaultValue={productData.categoryId}
                   onChange={(event) => handleChange(event)}
                 />
               </div>
@@ -145,6 +157,18 @@ function EditProductPage(props: any) {
                   onChange={(event) => handleChange(event)}
                 />
               </div>
+              <div className="productFormLeft">
+                <label>Variants</label>
+                <input
+                  type="text"
+                  placeholder="Enter Product Size"
+                  name="variants"
+                  defaultValue={productData.variants}
+                  onChange={(event) => handleChange(event)}
+                />
+              </div>
+              
+              
               {/* <div className="productFormLeft">
                 <label>Images </label>
                 <input type="text" placeholder="Apple AirPod" value={productData.images[0]} />

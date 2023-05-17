@@ -6,17 +6,23 @@ export type ProductDataType = {
     images: string[],
     slug:string,
     description:string,
-    sizes: string
+    sizes: string,
+    isAvailable: boolean,
+    variants:string
+  
   }
   export type SingleProductDataType = {
     id: string
     name: string
-    categories: string
+    categoryId: string
     price: number
     images: [],
     slug:string,
     description:string,
-    sizes: string
+    sizes: string,
+    isAvailable: boolean,
+    variants:string
+
   }
   
   export type productDataTypeKey = keyof ProductDataType

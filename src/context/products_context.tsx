@@ -9,7 +9,7 @@ import {
   GET_SINGLE_PRODUCT_BEGIN,
   GET_SINGLE_PRODUCT_SUCCESS,
   GET_SINGLE_PRODUCT_ERROR,
-  REMOVE_PRODUCT,
+  REMOVE_PRODUCT
 } from '../redux/actions/action'
 import { ProductDataType, SingleProductDataType } from '../types'
 import { api, apiWithHeader } from '../utils/api'
@@ -27,9 +27,9 @@ export type initialStateType = {
   productsError: boolean
   singleProductLoading: boolean
   singleProductError: boolean
-  udpateProductDetails:(arg:object) =>void
-  fetchProducts:()=>void
-
+  udpateProductDetails: (arg: object) => void
+  fetchProducts: () => void
+  addNewProduct: (arg: object) => void
 }
 
 const initialState: initialStateType = {
@@ -37,14 +37,17 @@ const initialState: initialStateType = {
   allProducts: [],
   featuredProducts: [],
   singleProduct: {
-    id: "",
-    name: "",
-    categories: "",
+    id: '',
+    name: '',
+    categoryId: '',
     price: 0,
     images: [],
-    slug:"",
-    description:"",
-    sizes: ""
+    slug: '',
+    description: '',
+    sizes: '',
+    isAvailable: false,
+    variants:''
+  
   },
   openSidebar: () => {},
   closeSidebar: () => {},
@@ -54,8 +57,9 @@ const initialState: initialStateType = {
   singleProductLoading: false,
   singleProductError: false,
   removeProduct: (id: string) => {},
-  udpateProductDetails:(arg:object) =>{},
-  fetchProducts:()=>{}
+  udpateProductDetails: (arg: object) => {},
+  fetchProducts: () => {},
+  addNewProduct: (arg: object) => {}
 }
 
 const ProductsContext = React.createContext<initialStateType>(initialState)
@@ -74,15 +78,14 @@ export const ProductsProvider: React.FC<productProps> = ({ children }) => {
     dispatch({ type: SIDEBAR_CLOSE })
   }
   const removeProduct = async (id: string) => {
-
     const deleteProduct = await api.delete(`/products/${id}`)
-    if(deleteProduct.status){
+    if (deleteProduct.status) {
       fetchProducts()
     }
     dispatch({ type: REMOVE_PRODUCT, payload: deleteProduct.status })
   }
 
-  const fetchSingleProduct =async (id: string) => {
+  const fetchSingleProduct = async (id: string) => {
     // dispatch({ type: GET_SINGLE_PRODUCT_BEGIN })
     try {
       const singleProduct = await api.get(`/products/${id}`)
@@ -94,36 +97,46 @@ export const ProductsProvider: React.FC<productProps> = ({ children }) => {
     }
   }
 
-  const udpateProductDetails = async(updateProduct:any) =>{
-    const updatedProduct = await api.put('/products',updateProduct);
-    // const product = state.allProducts.find((product:any) => product.id === updateProduct.id)
-    // const updatedProductList = product ? [updateProduct,
-    //     ...state.allProducts.filter((product:any) => product.id !== updateProduct.id)
-    //   ] : [...state.allProducts,updateProduct ]
+  const udpateProductDetails = async (updateProduct: any) => {
+    const updatedProduct = await api.put('/products', updateProduct)
 
-      if(updatedProduct.data) {
-        fetchProducts()
-      }
-      }
-
-  
-  
-    const fetchProducts = async () => {
-      dispatch({ type: GET_PRODUCTS_BEGIN })
-      try {
-        const queryResult = await api.get('/products')
-        const result = await queryResult.data
-        dispatch({ type: GET_PRODUCTS_SUCCESS, payload: result })
-      } catch (error) {
-        dispatch({ type: GET_PRODUCTS_ERROR })
-      }
+    if (updatedProduct.data) {
+      fetchProducts()
     }
-   
-  
+  }
+
+  const addNewProduct = async (newProduct: any) => {
+    console.log('newProduct', newProduct)
+    const addProduct = await api.post('/products', newProduct)
+
+    if (addProduct.data) {
+      fetchProducts()
+    }
+  }
+
+  const fetchProducts = async () => {
+    dispatch({ type: GET_PRODUCTS_BEGIN })
+    try {
+      const queryResult = await api.get('/products')
+      const result = await queryResult.data
+      dispatch({ type: GET_PRODUCTS_SUCCESS, payload: result })
+    } catch (error) {
+      dispatch({ type: GET_PRODUCTS_ERROR })
+    }
+  }
 
   return (
     <ProductsContext.Provider
-      value={{ ...state, fetchSingleProduct, openSidebar, closeSidebar, removeProduct, udpateProductDetails, fetchProducts }}>
+      value={{
+        ...state,
+        fetchSingleProduct,
+        openSidebar,
+        closeSidebar,
+        removeProduct,
+        udpateProductDetails,
+        fetchProducts,
+        addNewProduct
+      }}>
       {children}
     </ProductsContext.Provider>
   )
