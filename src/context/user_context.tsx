@@ -8,9 +8,9 @@ import {
   GET_USERS_ERROR,
   LOGGED_IN_BEGIN
 } from '../redux/actions/action'
-import { DecodedUser } from '../utils/type-guards'
 import { api, apiWithHeader } from '../utils/api'
 import { getTokenFromLocalStorage } from '../utils/token'
+import jwtDecode from 'jwt-decode'
 
 export type userType = {
   email: string
@@ -20,6 +20,7 @@ export type userType = {
   lname: string | null
   id:string
   token:string
+  role: string
 }
 export type initialStateType = {
   users: userType[]
@@ -28,18 +29,26 @@ export type initialStateType = {
   addNewUser: (user: any) => void
   usersLoading: boolean
   usersError: boolean
-  user: userType[]
+  user: userType
   userLoading: boolean
 }
 const initialState: initialStateType = {
   users: [],
-
   isLoading: false,
   login: () => {},
   addNewUser: () => {},
   usersLoading: false,
   usersError: false,
-  user: [],
+  user: {
+    email: "",
+  password: "",
+  isAdmin: false,
+  fname:"",
+  lname: "",
+  id:"",
+  token:"",
+  role: ""
+  },
   userLoading: false
 }
 
@@ -58,7 +67,10 @@ export const UserProvider: React.FC<userProps> = ({ children }) => {
       const queryResult = await api.post('/users/signin', user)
       localStorage.setItem('token', queryResult.data)
       getTokenFromLocalStorage()
-        dispatch({ type: LOGGED_IN, payload: queryResult.data })
+      const userDecoded: userType = jwtDecode(queryResult.data)
+      const userToLocalStorage = JSON.stringify(userDecoded)
+      localStorage.setItem('user', userToLocalStorage)
+        dispatch({ type: LOGGED_IN, payload: userDecoded})
     } catch (error) {
       console.log(error)
     }
