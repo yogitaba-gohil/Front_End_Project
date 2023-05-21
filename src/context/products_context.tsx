@@ -86,7 +86,7 @@ export const ProductsProvider: React.FC<productProps> = ({ children }) => {
   }
 
   const fetchSingleProduct = async (id: string) => {
-    dispatch({ type: GET_SINGLE_PRODUCT_BEGIN })
+    // dispatch({ type: GET_SINGLE_PRODUCT_BEGIN })
     try {
       const singleProduct = await api.get(`/products/${id}`)
       if (singleProduct.data) {
@@ -99,16 +99,13 @@ export const ProductsProvider: React.FC<productProps> = ({ children }) => {
 
   const udpateProductDetails = async (updateProduct: any) => {
     const updatedProduct = await api.put('/products', updateProduct)
-
     if (updatedProduct.data) {
       fetchProducts()
     }
   }
 
   const addNewProduct = async (newProduct: any) => {
-    console.log('newProduct', newProduct)
     const addProduct = await api.post('/products', newProduct)
-
     if (addProduct.data) {
       fetchProducts()
     }

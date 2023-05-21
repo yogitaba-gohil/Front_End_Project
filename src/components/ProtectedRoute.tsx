@@ -4,7 +4,6 @@ import { useUserContext } from '../context/user_context'
 
 const ProtectedRoute = ({ children }: PropsWithChildren) => {
   const { user } = useUserContext()
-  console.log('user', user)
   if (user.role !== "ADMIN") {
     return <Navigate to="/" replace />
   }

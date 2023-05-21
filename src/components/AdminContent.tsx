@@ -23,6 +23,7 @@ const AdminContent = () => {
   const handleEdit = (id: any, arg: boolean) => {
     setProductId(id)
     setIsEdit(arg)
+    setIsAdd(false)
   }
   const handleAdd = (arg: boolean) => {
     setIsEdit(arg)

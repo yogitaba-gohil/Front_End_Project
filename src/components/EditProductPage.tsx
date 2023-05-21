@@ -15,6 +15,7 @@ function EditProductPage(props: any) {
     udpateProductDetails,
     addNewProduct
   } = useProductsContext()
+
   const [productData, setProductData] = useState({
     id: '',
     name: '',
@@ -25,21 +26,34 @@ function EditProductPage(props: any) {
     description: '',
     sizes: '',
     isAvailable: true,
-    variants:''
-  
+    variants: ''
   })
 
-  console.log('props', props)
+  
 
   useEffect(() => {
-    if (props.productId) {
+    if( props.productId !== "" && singleProduct.id !== ''){
       fetchSingleProduct(props.productId)
       setProductData(singleProduct)
     }
-  }, [props.productId, singleProduct])
+    
+  }, [singleProduct.id, props.productId])
+
 
   const handleBack = () => {
     props.handleEdit('', false)
+    setProductData({
+      id: '',
+      name: '',
+      categoryId: '',
+      price: 0,
+      images: [],
+      slug: '',
+      description: '',
+      sizes: '',
+      isAvailable: true,
+      variants: ''
+    })
   }
 
   const handleChange = (event: any) => {
@@ -57,21 +71,19 @@ function EditProductPage(props: any) {
 
   const handleUpdateProductDetails = (event: any) => {
     event.preventDefault()
-
     props.handleEdit('', false)
     if (props.isAdd) {
+      productData.isAvailable = true
       addNewProduct(productData)
     } else {
-      productData.isAvailable = true;
+      productData.isAvailable = true
       udpateProductDetails(productData)
     }
   }
 
   if (singleProductLoading) {
     return <Loading />
-  }
-  if (singleProductError) {
-    return <ErrorPage />
+  
   } else {
     return (
       <Wrapper>
@@ -167,8 +179,7 @@ function EditProductPage(props: any) {
                   onChange={(event) => handleChange(event)}
                 />
               </div>
-              
-              
+
               {/* <div className="productFormLeft">
                 <label>Images </label>
                 <input type="text" placeholder="Apple AirPod" value={productData.images[0]} />
