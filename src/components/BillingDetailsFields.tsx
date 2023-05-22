@@ -1,25 +1,8 @@
-import FormField from "./FormField";
+import FormField from './FormField'
 
-const BillingDetailsFields = (props: { handleChange: any; }) => {
+const BillingDetailsFields = (props: { handleChange: any }) => {
   return (
     <>
-      <FormField
-        name="name"
-        label="Name"
-        type="text"
-        placeholder="yogitaba gohil"
-        required
-        onChange={props.handleChange}
-      />
-      <FormField
-        name="email"
-        label="Email"
-        type="email"
-        placeholder="tast@basicbeauty.com"
-        required
-        onChange={props.handleChange}
-
-      />
       <FormField
         name="address"
         label="Address"
@@ -27,7 +10,6 @@ const BillingDetailsFields = (props: { handleChange: any; }) => {
         placeholder="Herwanta"
         required
         onChange={props.handleChange}
-
       />
       <FormField
         name="city"
@@ -36,16 +18,14 @@ const BillingDetailsFields = (props: { handleChange: any; }) => {
         placeholder="Tampere"
         required
         onChange={props.handleChange}
-
       />
-      
+
       <FormField
-        name="zip"
-        label="ZIP"
+        name="PostalCode"
+        label="PostalCode"
         type="text"
         placeholder="33700"
         onChange={props.handleChange}
-
       />
       <FormField
         name="country"
@@ -54,10 +34,9 @@ const BillingDetailsFields = (props: { handleChange: any; }) => {
         placeholder="Finland"
         required
         onChange={props.handleChange}
-
       />
     </>
-  );
-};
+  )
+}
 
-export default BillingDetailsFields;
+export default BillingDetailsFields

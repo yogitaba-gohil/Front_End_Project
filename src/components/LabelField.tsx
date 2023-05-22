@@ -1,22 +1,21 @@
 import styled from 'styled-components'
 
-const FormField: React.FC<{
+const LabelField: React.FC<{
   label: string
-  type: string
   name: string
-  placeholder: string
-  required?: boolean
-  onChange:()=>void
-}> = ({ label, type, name, placeholder, required, onChange }) => {
+  title:string
+}> = ({ label, name , title}) => {
   return (
     <FormFieldContainer>
-      <Label htmlFor={name} style={{width:"70%"}}>{label}</Label>
-      <Input name={name} type={type} placeholder={placeholder} required onChange={onChange} />
+      <Label htmlFor={name} style={{ width: '70%' }}>
+        {label}
+      </Label>
+      <text>{title}</text>
     </FormFieldContainer>
   )
 }
 
-export default FormField
+export default LabelField
 
 const FormFieldContainer = styled.div`
   display: -ms-flexbox;

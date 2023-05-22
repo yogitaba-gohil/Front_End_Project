@@ -20,11 +20,12 @@ function App() {
     <Router>
       <Layout>
         <Routes>
-          <Route path="/" element={  <HomePage />} />
-          <Route path="/products" element={ <ProductsPage /> } />
+          <Route path="/" element={<HomePage />} />
+          <Route path="/products" element={<ProductsPage />} />
           <Route path="/products/:id" element={<SingleProductPage />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/logIn" element={<LogInPage />} />
+
           <Route
             path="/admin"
             element={
@@ -36,7 +37,7 @@ function App() {
           />
           <Route path="/checkout" element={<CheckoutPage />} />
           <Route path="/successful_payment" element={<SuccessfulPayment />} />
-          <Route path='/signUp' element={<SignUpPage />} />
+          <Route path="/signUp" element={<SignUpPage />} />
         </Routes>
       </Layout>
     </Router>
