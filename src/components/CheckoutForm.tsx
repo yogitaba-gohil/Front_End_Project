@@ -12,14 +12,15 @@ import UserDetails from './UserDetails'
 import PaymentDetails from './PaymentDetails'
 
 export const CheckoutForm = () => {
-
   const { cart, totalAmount, addToOrder, orders } = useCartContext()
   const { user } = useUserContext()
   const UserId = user.id
 
   const [succeeded, setSucceeded] = useState(false)
   const [editPayment, setEditPayment] = useState(false)
+  const [addPayment, setAddPayment] = useState(false)
   const [editAddress, setEditAddress] = useState(false)
+  const [addAddress, setAddAddress] = useState(false)
   const [error, setError] = useState('') // error message
   const [processing, setProcessing] = useState(false)
   const [billingDetails, setBillingDetails] = useState({
@@ -27,36 +28,34 @@ export const CheckoutForm = () => {
     city: '',
     country: '',
     postalCode: '',
+    id: ''
   })
   const [paymentDetails, setPaymentDetails] = useState({
-    paymentType:"",
-    provider:"",
-    cardNumber:"",
-    expirationDate:"",
-    cardHolderName:""
-
+    paymentType: '',
+    provider: '',
+    cardNumber: '',
+    expirationDate: '',
+    cardHolderName: '',
+    id: ''
   })
 
-  useEffect(()=>{
+  useEffect(() => {
     getUserAddress()
     getPaymentDetails()
-  
   }, [])
 
-  const getUserAddress = async() =>{
-    const response = await api.get(`addresses/user/${UserId}`);
-    if(response.data){
+  const getUserAddress = async () => {
+    const response = await api.get(`addresses/user/${UserId}`)
+    if (response.data) {
       setBillingDetails(response.data[0])
     }
-
   }
-const getPaymentDetails = async () =>{
-  const response = await api.get(`payment/user/${UserId}`);
-    if(response.data){
+  const getPaymentDetails = async () => {
+    const response = await api.get(`payment/user/${UserId}`)
+    if (response.data) {
       setPaymentDetails(response.data[0])
     }
-
-}
+  }
   const navigate = useNavigate()
 
   const handleChange = (event: any) => {
@@ -71,7 +70,7 @@ const getPaymentDetails = async () =>{
     })
   }
 
-  const handlePaymentChange = (event:any) =>{
+  const handlePaymentChange = (event: any) => {
     const target = event.target
     const value = target.value
     const name = target.name
@@ -81,9 +80,7 @@ const getPaymentDetails = async () =>{
         [name]: value
       }
     })
-
   }
-  
 
   const handleSubmit = async (event: any) => {
     event.preventDefault()
@@ -102,106 +99,144 @@ const getPaymentDetails = async () =>{
     }
   }
 
-  const handlePaymentSubmit = async (event: any) =>{
+  const handlePaymentSubmit = async (event: any) => {
     event.preventDefault()
-    sendPaymentData();
-
+    sendPaymentData()
+    setEditPayment(false)
+    setAddPayment(false)
   }
   const sendPaymentData = async () => {
-    
     const paymentData = {
       paymentType: paymentDetails?.paymentType,
       provider: paymentDetails?.provider,
       cardNumber: paymentDetails?.cardNumber,
       expirationDate: paymentDetails?.expirationDate,
       cardHolderName: paymentDetails?.cardHolderName,
+      id: paymentDetails?.id,
+
       user: {
-        id: UserId,
-      },
-    };
-
-    const response = await api.post('/payment', paymentData);
+        id: UserId
+      }
+    }
+    if (addPayment) {
+      const response = await api.post('/payment', paymentData)
+    }
+    if (editPayment) {
+      const response = await api.put('/payment', paymentData)
+    }
   }
-  const handleEditDetails = () =>{
-    setEditAddress(true);
+  const handleEditDetails = () => {
+    setEditAddress(true)
   }
-  const handleEditPayment = () =>{
+  const handleAddDetails = () => {
+    setAddAddress(true)
+  }
+  const handleEditPayment = () => {
     setEditPayment(true)
-
   }
- 
-const sendAddressData = async() =>{
 
-  const addressData = {
-    address: billingDetails?.address,
-    city: billingDetails?.city,
-    country: billingDetails?.country,
-    postalCode: billingDetails?.postalCode,
-    user: {
-      id: UserId,
-    },
-  };
-
-  const response = await api.post('/addresses', addressData);
-
-}
-const handleAddressSubmit =(event: any) =>{
-  event.preventDefault()
-  sendAddressData();
-
-
-}
+  const sendAddressData = async () => {
+    const addressData = {
+      address: billingDetails?.address,
+      city: billingDetails?.city,
+      country: billingDetails?.country,
+      postalCode: billingDetails?.postalCode,
+      id: billingDetails?.id,
+      user: {
+        id: UserId
+      }
+    }
+    if (addAddress) {
+      const response = await api.post('/addresses', addressData)
+    }
+    if (editAddress) {
+      const response = await api.put('/addresses', addressData)
+    }
+  }
+  const handleAddressSubmit = (event: any) => {
+    event.preventDefault()
+    sendAddressData()
+    setEditAddress(false)
+    setAddAddress(false)
+  }
   return (
     <Wrapper>
-     {editAddress ? <form id="payment-form" onSubmit={handleAddressSubmit}>
-        <h4>enter billing details:</h4>
-        <BillingDetailsFields handleChange={handleChange} />
+      {editAddress || addAddress ? (
+        <form id="payment-form" onSubmit={handleAddressSubmit}>
+          <h4>enter billing details:</h4>
+          <BillingDetailsFields handleChange={handleChange} billingDetails={billingDetails} />
+          <button type="submit">Add Billing Details</button>
+        </form>
+      ) : (
+        <form>
+          <h4>User Billing Details</h4> <UserDetails billingDetails={billingDetails} />{' '}
+          <div className="buttonContainer">
+            <button className="productAddButton" onClick={handleAddDetails}>
+              Add
+            </button>
 
-        
-
-        {/* Show any error that happens when processing the payment */}
-        {error ?? (
-          <div className="card-error" role="alert">
-            {error}
+            <button className="productAddButton" onClick={handleEditDetails}>
+              Update
+            </button>
           </div>
-        )}
-        <button type="submit">
-          <span id="button-text">
-            {processing ? (
-              <div className="spinner" id="spinner" />
-            ) : (
-              `Pay ${formatPrice(totalAmount)}`
-            )}
-          </span>
-        </button>
-      </form> : <form><h4>User Billing Details</h4> <UserDetails billingDetails={billingDetails} /> <button onClick={handleEditDetails}>Edit Details</button></form> }
-      
+        </form>
+      )}
 
-<TestCardDetails>
-{ editPayment ? <form onSubmit={handlePaymentSubmit}>
-      <h4>card details for test:</h4>  <PaymentDetailsFields handleChange={handlePaymentChange}  />  <button type="submit">Add Payment Details</button> </form> 
- : <Wrapper> <form> <h4>User Payment Details:</h4><PaymentDetails payment={paymentDetails} /> <button onClick={handleEditPayment}>Edit Details</button></form> </Wrapper>}
-</TestCardDetails>
+      {editPayment ? (
+        <form onSubmit={handlePaymentSubmit}>
+          <h4>card details for test:</h4>{' '}
+          <PaymentDetailsFields handleChange={handlePaymentChange} />{' '}
+          <button type="submit">Add Payment Details</button>{' '}
+        </form>
+      ) : (
+        <Wrapper>
+          {' '}
+          <form>
+            {' '}
+            <h4>User Payment Details:</h4>
+            <PaymentDetails payment={paymentDetails} />{' '}
+            <div className="buttonContainer">
+              <button className="productAddButton" onClick={handleEditPayment}>
+                Add
+              </button>
 
-     
-      
-<button type="submit">
-          <span id="button-text">
-            {processing ? (
-              <div className="spinner" id="spinner" />
-            ) : (
-              `Pay ${formatPrice(totalAmount)}`
-            )}
-          </span>
-        </button>
+              <button className="productAddButton" onClick={handleEditPayment}>
+                Update
+              </button>
+            </div>
+          </form>{' '}
+        </Wrapper>
+      )}
+
+      <button type="submit" onClick={handleSubmit}>
+        <span id="button-text">
+          {processing ? (
+            <div className="spinner" id="spinner" />
+          ) : (
+            `Pay ${formatPrice(totalAmount)}`
+          )}
+        </span>
+      </button>
     </Wrapper>
   )
 }
 
 const Wrapper = styled.div`
   margin: 1rem auto;
-`
-
-const TestCardDetails = styled.ul`
-  color: var(--clr-primary-7);
+  .buttonContainer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+  .productAddButton {
+    width: 80px;
+    border: none;
+    padding: 5px;
+    background-color: teal;
+    color: white;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 10px;
+  }
 `

@@ -4,14 +4,15 @@ const FormField: React.FC<{
   label: string
   type: string
   name: string
+  value:string
   placeholder: string
   required?: boolean
   onChange:()=>void
-}> = ({ label, type, name, placeholder, required, onChange }) => {
+}> = ({ label, type, name, placeholder, required, onChange, value }) => {
   return (
     <FormFieldContainer>
       <Label htmlFor={name} style={{width:"70%"}}>{label}</Label>
-      <Input name={name} type={type} placeholder={placeholder} required onChange={onChange} />
+      <Input name={name} type={type} placeholder={placeholder} required onChange={onChange} value={value}/>
     </FormFieldContainer>
   )
 }
