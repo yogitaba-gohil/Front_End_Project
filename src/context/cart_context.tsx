@@ -108,7 +108,6 @@ export const CartProvider: React.FC<cartProps> = ({ children }) => {
 
     if (response.status === 200) {
       const updatedOrderList = await api.get('/orders')
-      console.log('updatedOrderList', updatedOrderList)
       dispatch({ type: ADD_TO_ORDER, payload: updatedOrderList })
     }
   }

@@ -10,8 +10,6 @@ import { cartType, useCartContext } from '../context/cart_context'
 const CartItem: React.FC<{ cartItem: cartType }> = ({ cartItem }) => {
   const { id, image, name, price, quantity, slug } = cartItem
 
-  console.log('quantity', quantity)
-
   const { removeItem, toggleAmount } = useCartContext()
 
   const increase: () => void = () => {

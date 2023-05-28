@@ -82,78 +82,45 @@ export const CheckoutForm = () => {
     })
   }
 
-//   const handleSubmit = async (event: any) => {
-//     event.preventDefault()
-//     setProcessing(true)
-//     const today = new Date(),
-//       date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
-// console.log('cart', cart)
-//     const order = { orderDetails: cart,  user: {id:UserId},paymentType: paymentDetails.paymentType, shippingAddress: billingDetails, shippingMethod:"Home Delivery", shippingFee: "free"  }
-// console.log('order', order)
-//     if (billingDetails && paymentDetails) {
-//       setError('')
-//       setProcessing(false)
-//       setSucceeded(true)
-//       const response = await api.post('/orders', order)
-//       console.log('response', response)
-
-//       // addToOrder(order) // re-route to successful payment page
-//       return navigate('/successful_payment')
-//     }
-//   }
-  const handleCheckout = async () =>{
-    if(!billingDetails || !paymentDetails) return alert('Please select address and payment method');
-    console.log('cart', cart)
+  const handleCheckout = async () => {
+    if (!billingDetails || !paymentDetails) return alert('Please select address and payment method')
     const orderDetails = cart?.map((item) => {
-
-
-      const { id, variant, image, sizes, price, quantity } = item;
-      const productId = id;
-      const size = sizes;
+      const { id, image, sizes, price, quantity } = item
+      const productId = id
+      const size = sizes
       return {
-        
         image,
         price,
         productId,
         quantity,
-        user:{  id: UserId} ,
-        variant:"small",
+        user: { id: UserId },
+        variant: 'small',
         size
-      };
-    });
-    console.log('orderDetails', orderDetails)
+      }
+    })
 
-    const response = await api.post('/order-details/all-order-details', orderDetails);
+    const response = await api.post('/order-details/all-order-details', orderDetails)
 
-    console.log('response', response)
     if (response.status === 200) {
-      const idsToCreateOrder = response.data.map((item: any) => item.id);
- 
-       const orderToCreate = {
-         user: {
-           id: UserId,
-         },
-         orderDetails: idsToCreateOrder,
-         paymentType: paymentDetails.paymentType,
-         shippingAddress: billingDetails.address,
-         shippingMethod:  'DOOR' ,
-         shippingFee:  0,
-         total: totalAmount
-       };
-       addToOrder(orderToCreate)
-       setError('')
+      const idsToCreateOrder = response.data.map((item: any) => item.id)
+
+      const orderToCreate = {
+        user: {
+          id: UserId
+        },
+        orderDetails: idsToCreateOrder,
+        paymentType: paymentDetails.paymentType,
+        shippingAddress: billingDetails.address,
+        shippingMethod: 'DOOR',
+        shippingFee: 0,
+        total: totalAmount
+      }
+      addToOrder(orderToCreate)
+      setError('')
       setProcessing(false)
       setSucceeded(true)
       return navigate('/successful_payment')
-
-      
-      
-     }
-     
-    
- 
- 
- 
+    }
   }
 
   const handlePaymentSubmit = async (event: any) => {

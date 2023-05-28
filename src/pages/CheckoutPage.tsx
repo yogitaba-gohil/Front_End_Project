@@ -1,12 +1,24 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import PageHero from '../components/PageHero'
 import { useCartContext } from '../context/cart_context'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import CheckoutContent from '../components/CheckoutContent'
+import { useUserContext } from '../context/user_context'
 
 const CheckoutPage = () => {
   const { cart } = useCartContext()
+  const { user } = useUserContext()
+  const UserId = user.id
+  const navigate = useNavigate()
+
+  useEffect(()=>{
+    if(!UserId){
+      alert("please login first!!")
+       navigate('/logIn')
+
+    }
+  },[UserId])
 
   if (cart.length < 1) {
     return (

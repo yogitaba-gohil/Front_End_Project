@@ -13,7 +13,6 @@ import { initialStateType, cartType } from '../../context/cart_context'
 
 const cart_reducer = (state: initialStateType, action: { type: any; payload?: any }) => {
   if (action.type === ADD_TO_CART) {
-    console.log('action.payload', action.payload)
     const { id, slug, quantity, singleProduct } = action.payload
     const tempItem = state.cart.find((item) => item.id === id)
 
