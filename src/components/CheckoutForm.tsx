@@ -171,9 +171,9 @@ export const CheckoutForm = () => {
         <form>
           <h4>User Billing Details</h4> <UserDetails billingDetails={billingDetails} />{' '}
           <div className="buttonContainer">
-            <button className="productAddButton" onClick={handleAddDetails}>
+            {/* <button className="productAddButton" onClick={handleAddDetails}>
               Add
-            </button>
+            </button> */}
 
             <button className="productAddButton" onClick={handleEditDetails}>
               Update
@@ -196,9 +196,9 @@ export const CheckoutForm = () => {
             <h4>User Payment Details:</h4>
             <PaymentDetails payment={paymentDetails} />{' '}
             <div className="buttonContainer">
-              <button className="productAddButton" onClick={handleEditPayment}>
+              {/* <button className="productAddButton" onClick={handleEditPayment}>
                 Add
-              </button>
+              </button> */}
 
               <button className="productAddButton" onClick={handleEditPayment}>
                 Update
