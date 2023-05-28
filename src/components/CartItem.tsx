@@ -8,7 +8,9 @@ import AmountButtons from './AmountButtons'
 import { cartType, useCartContext } from '../context/cart_context'
 
 const CartItem: React.FC<{ cartItem: cartType }> = ({ cartItem }) => {
-  const { id, image, name, price, amount, slug } = cartItem
+  const { id, image, name, price, quantity, slug } = cartItem
+
+  console.log('quantity', quantity)
 
   const { removeItem, toggleAmount } = useCartContext()
 
@@ -36,9 +38,9 @@ const CartItem: React.FC<{ cartItem: cartType }> = ({ cartItem }) => {
       {/* price column */}
       <div className='price'>{formatPrice(price)}</div>
       {/* quantity column */}
-      <AmountButtons amount={amount} increase={increase} decrease={decrease} />
+      <AmountButtons quantity={quantity} increase={increase} decrease={decrease} />
       {/* subtotal column */}
-      <h5 className='subtotal'>{formatPrice(price * amount)}</h5>
+      <h5 className='subtotal'>{formatPrice(price * quantity)}</h5>
       {/* remove icon */}
       <button
         type='button'

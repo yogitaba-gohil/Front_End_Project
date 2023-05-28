@@ -10,21 +10,21 @@ const AddToCart: React.FC<{ singleProduct: ProductDataType | {} }> = ({ singlePr
   const { addToCart } = useCartContext()
 
   const { id, slug } = { ...singleProduct }
-  const [amount, setAmount] = useState(1)
+  const [quantity, setQuantity] = useState(1)
 
-  const increaseAmount = () => setAmount(amount + 1)
+  const increaseAmount = () => setQuantity(quantity + 1)
 
   const decreaseAmount = () => {
-    if (amount > 1) {
-      setAmount(amount - 1)
+    if (quantity > 1) {
+      setQuantity(quantity - 1)
     }
   }
 
   return (
     <Wrapper>
       <div className="btn-container">
-        <AmountButtons amount={amount} increase={increaseAmount} decrease={decreaseAmount} />
-        <Link to="/cart" className="btn" onClick={() => addToCart(id, slug, amount, singleProduct)}>
+        <AmountButtons quantity={quantity} increase={increaseAmount} decrease={decreaseAmount} />
+        <Link to="/cart" className="btn" onClick={() => addToCart(id, slug, quantity, singleProduct)}>
           add to cart
         </Link>
       </div>

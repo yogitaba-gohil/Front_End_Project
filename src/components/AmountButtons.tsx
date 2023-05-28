@@ -3,16 +3,16 @@ import styled from 'styled-components'
 import { FaPlus, FaMinus } from 'react-icons/fa'
 
 const AmountButtons: React.FC<{
-  amount: number
+  quantity: number
   increase: () => void
   decrease: () => void
-}> = ({ amount, increase, decrease }) => {
+}> = ({ quantity, increase, decrease }) => {
   return (
     <Wrapper className='amount-btns'>
       <button type='button' className='amount-btn' onClick={decrease}>
         <FaMinus />{' '}
       </button>
-      <h2 className='amount'>{amount}</h2>
+      <h2 className='amount'>{quantity}</h2>
       <button type='button' className='amount-btn' onClick={increase}>
         <FaPlus />{' '}
       </button>

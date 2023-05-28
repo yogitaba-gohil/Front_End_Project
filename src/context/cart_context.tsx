@@ -12,20 +12,28 @@ import {
   GET_ORDERS_SUCCESS,
   GET_ORDERS_ERROR
 } from '../redux/actions/action'
+import { api } from '../utils/api'
 
 export type cartType = {
   id: string
   slug: string
   name: string
-  amount: number
   image: string
   price: number
+  variant: string
+  quantity: number
+  sizes: string
 }
-export type orderType ={
-  products: [] | any
-  userId:string
-  createdAt: string
-  id:number
+export type orderType = {
+  user: {
+    id: string
+  }
+  orderDetails: string
+  paymentType: string
+  shippingAddress: string
+  shippingMethod: string
+  shippingFee: number
+  total: number
 }
 
 export type initialStateType = {
@@ -35,16 +43,16 @@ export type initialStateType = {
   addToCart: (
     id: string | undefined,
     slug: string | undefined,
-    amount: number,
+    quantity: number,
     singleProduct: ProductDataType | {}
   ) => void
   removeItem: (id: string) => void
   toggleAmount: (id: string, value: string) => void
   clearCart: () => void
-  orders:orderType[]
-  addToOrder:(orders:orderType)=>void
-  orderLoading:boolean
-  ordersError:boolean
+  orders: orderType[]
+  addToOrder: (orders: orderType) => void
+  orderLoading: boolean
+  ordersError: boolean
 }
 
 const getLocalStorage: () => [] | cartType[] = () => {
@@ -64,17 +72,17 @@ const initialState = {
   removeItem: () => {},
   toggleAmount: () => {},
   clearCart: () => {},
-  orders:[],
-  addToOrder:()=>{},
-  orderLoading:false,
+  orders: [],
+  addToOrder: () => {},
+  orderLoading: false,
   ordersError: false
 }
 
 const CartContext = React.createContext<initialStateType>(initialState)
 
 type cartProps = {
-    children: React.ReactNode // children prop typr
-  }
+  children: React.ReactNode // children prop typr
+}
 
 export const CartProvider: React.FC<cartProps> = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState)
@@ -82,12 +90,12 @@ export const CartProvider: React.FC<cartProps> = ({ children }) => {
   const addToCart = (
     id: string | undefined,
     slug: string | undefined,
-    amount: number,
+    quantity: number,
     singleProduct: ProductDataType | {}
   ) => {
     dispatch({
       type: ADD_TO_CART,
-      payload: { id, slug, amount, singleProduct },
+      payload: { id, slug, quantity, singleProduct }
     })
   }
 
@@ -95,10 +103,14 @@ export const CartProvider: React.FC<cartProps> = ({ children }) => {
     dispatch({ type: REMOVE_CART_ITEM, payload: id })
   }
 
-  const addToOrder =(orders:orderType) =>{
-    const updatedOrderList =  [...state.orders,orders ]
-    dispatch({ type: ADD_TO_ORDER, payload:updatedOrderList  })
+  const addToOrder = async (orders: orderType) => {
+    const response = await api.post('/orders', orders)
 
+    if (response.status === 200) {
+      const updatedOrderList = await api.get('/orders')
+      console.log('updatedOrderList', updatedOrderList)
+      dispatch({ type: ADD_TO_ORDER, payload: updatedOrderList })
+    }
   }
 
   const toggleAmount = (id: string, value: string) => {
@@ -124,13 +136,12 @@ export const CartProvider: React.FC<cartProps> = ({ children }) => {
   // when the cart changes, store the changes to localStorage + re-calculate total amount in cart
   useEffect(() => {
     localStorage.setItem('cart', JSON.stringify(state.cart))
-    dispatch({type: COUNT_CART_TOTALS})
+    dispatch({ type: COUNT_CART_TOTALS })
   }, [state.cart])
 
   return (
     <CartContext.Provider
-      value={{ ...state, addToCart, removeItem, toggleAmount, clearCart, addToOrder }}
-    >
+      value={{ ...state, addToCart, removeItem, toggleAmount, clearCart, addToOrder }}>
       {children}
     </CartContext.Provider>
   )

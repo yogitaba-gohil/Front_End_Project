@@ -13,14 +13,15 @@ import { initialStateType, cartType } from '../../context/cart_context'
 
 const cart_reducer = (state: initialStateType, action: { type: any; payload?: any }) => {
   if (action.type === ADD_TO_CART) {
-    const { id, slug, amount, singleProduct } = action.payload
+    console.log('action.payload', action.payload)
+    const { id, slug, quantity, singleProduct } = action.payload
     const tempItem = state.cart.find((item) => item.id === id)
 
     if (tempItem) {
       const tempCart = state.cart.map((cartItem) => {
         if (cartItem.id === id) {
-          const newAmount = tempItem.amount + amount
-          return { ...cartItem, amount: newAmount }
+          const newAmount = tempItem.quantity + quantity
+          return { ...cartItem, quantity: newAmount }
         } else {
           return cartItem
         }
@@ -32,9 +33,12 @@ const cart_reducer = (state: initialStateType, action: { type: any; payload?: an
         id,
         slug,
         name: singleProduct.name,
-        amount,
+        quantity,
         image: singleProduct.images[0],
-        price: singleProduct.price
+        price: singleProduct.price,
+        variant: singleProduct.variant,
+        sizes:singleProduct.sizes
+
       }
       return { ...state, cart: [...state.cart, newItem] }
     }
@@ -62,13 +66,13 @@ const cart_reducer = (state: initialStateType, action: { type: any; payload?: an
     const tempCart = state.cart.map((cartItem) => {
       if (cartItem.id === id) {
         if (value === 'inc') {
-          return { ...cartItem, amount: cartItem.amount + 1 }
+          return { ...cartItem, quantity: cartItem.quantity + 1 }
         } else {
-          let tempAmount = cartItem.amount - 1
+          let tempAmount = cartItem.quantity - 1
           if (tempAmount < 1) {
             tempAmount = 1
           }
-          return { ...cartItem, amount: tempAmount }
+          return { ...cartItem, quantity: tempAmount }
         }
       } else {
         return cartItem
@@ -83,10 +87,10 @@ const cart_reducer = (state: initialStateType, action: { type: any; payload?: an
   if (action.type === COUNT_CART_TOTALS) {
     const { totalItems, totalAmount } = state.cart.reduce(
       (total, cartItem) => {
-        const { price, amount } = cartItem
+        const { price, quantity } = cartItem
 
-        total.totalItems += amount
-        total.totalAmount += amount * price
+        total.totalItems += quantity
+        total.totalAmount += quantity * price
 
         return total
       },

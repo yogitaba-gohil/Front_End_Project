@@ -109,11 +109,11 @@
     "products": [
       {
         "id": 0,
-        "amount": 2
+        "quantity": 2
       },
       {
         "id": 2,
-        "amount": 1
+        "quantity": 1
       }
     ],
     "userId": 1,
