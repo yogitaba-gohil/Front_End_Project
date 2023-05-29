@@ -15,6 +15,7 @@ export const getUniqueValues = (
     .map(item => item[category])
     .flat()
     .filter(Boolean)
+    
   if (noAllValue) {
     return [...Array.from(new Set(unique))]
   }

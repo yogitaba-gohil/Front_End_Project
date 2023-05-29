@@ -44,8 +44,7 @@ import {
       return { ...state, filteredProducts: tempProducts }
     }
     if (action.type === UPDATE_FILTERS) {
-      let { name, value, checked } = action.payload
-      
+      let { name, value } = action.payload      
      
       return { ...state, filters: { ...state.filters, [name]: value } }
     }
@@ -69,7 +68,7 @@ import {
       // category
       if (category !== 'all') {
         tempProducts = tempProducts.filter(product => {
-          return product.categories === category
+          return product.category === category
         })
       }
   

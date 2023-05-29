@@ -1,7 +1,7 @@
 export type ProductDataType = {
     id: string
     name: string
-    categories: string
+    category: string
     price: number
     images: string[],
     slug:string,

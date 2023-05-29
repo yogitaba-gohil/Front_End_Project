@@ -9,7 +9,7 @@ export const CategoryFilters = () => {
     filters: { category },
   } = useFilterContext()
 
-  const uniqueCategories = getUniqueValues(allProducts, 'categories')
+  const uniqueCategories = getUniqueValues(allProducts, 'category')
 
   return (
     <div className='form-control'>
@@ -18,6 +18,7 @@ export const CategoryFilters = () => {
         {uniqueCategories.map((uniqueCategory) => {
           // without this if statement, TS complains uniqueCategory is possibility undefined
           if (typeof uniqueCategory === 'string') {
+
             return (
               <button
                 key={`${uniqueCategory}`}

@@ -33,26 +33,24 @@ const products_reducer = (state: initialStateType, action: AnyAction) => {
         name,
         slug,
         description,
-        categories,
+        category,
         price,
         sizes,
         images, //need to flatten
       } = product
-
+const newCategory = category.name
 
       return {
         id,
         name,
         slug,
-        categories,
+        category:newCategory,
         price,
         sizes,
         images,
         description
       }
     })
-
-
     const featuredProducts = allProducts.filter(
       (product: ProductDataType) => product
     )

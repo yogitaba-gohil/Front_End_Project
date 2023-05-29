@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 
 
 import { useUserContext } from '../context/user_context'
+import { api } from '../utils/api';
+import { getTokenFromLocalStorage } from '../utils/token';
 
 const SignUpContent = () => {
   const { addNewUser, users } = useUserContext()
@@ -15,6 +17,8 @@ const SignUpContent = () => {
     lname: '',
     password: '',
     email: '',
+    username:'',
+    phone:'',
     isAdmin: false
   })
   const handleIsAdmin = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,10 +32,33 @@ const SignUpContent = () => {
     setAddUser({ ...addUser, [event.target.name]: event.target.value })
   }
 
-  const handleSignUp = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSignUp = async(event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    addNewUser(addUser)
-    navigate("/logIn");
+    if (
+      !addUser.username ||
+      !addUser.fname ||
+      !addUser.lname ||
+      !addUser.email ||
+      !addUser.phone ||
+      !addUser.password
+    ) {
+      alert('please fill all the fields');
+      return;
+    }
+    const NewUser = {
+      username: addUser.username,
+      firstname: addUser.fname,
+      lastname: addUser.lname,
+      email: addUser.email,
+      phone: addUser.phone,
+      password: addUser.password,
+    };
+    const request = await api.post('/users/signup', NewUser);
+    localStorage.setItem('token', request.data);
+    getTokenFromLocalStorage();
+    navigate('/logIn');
+    // addNewUser(NewUser)
+    // navigate("/logIn");
 
   }
   return (
@@ -54,6 +81,13 @@ const SignUpContent = () => {
             onChange={handleChange}
           />
           <input
+            type="text"
+            name="username"
+            className="log-input"
+            placeholder="enter your  user name"
+            onChange={handleChange}
+          />
+          <input
             type="email"
             name="email"
             className="log-input"
@@ -65,6 +99,13 @@ const SignUpContent = () => {
             name="password"
             className="log-input"
             placeholder="enter password"
+            onChange={handleChange}
+          />
+          <input
+            type="text"
+            name="phone"
+            className="log-input"
+            placeholder="enter your  phone number"
             onChange={handleChange}
           />
           <FormControlLabel
