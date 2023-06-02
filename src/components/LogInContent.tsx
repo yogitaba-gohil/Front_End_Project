@@ -28,9 +28,10 @@ const LogInContent = () => {
     login(postData);
     navigate('/')
   }
+  console.log('user', user)
 
-  if (user.length > 0) {
-    return user[0].isAdmin ? <Navigate to="/" /> : null
+  if (user) {
+    return user.role =='ADMIN' ? <Navigate to="/" /> : null
   }
 
 

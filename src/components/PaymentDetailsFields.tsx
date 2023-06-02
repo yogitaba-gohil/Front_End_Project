@@ -10,6 +10,7 @@ const PaymentDetailsFields = (props: { handleChange: any; }) => {
         placeholder="Card Holder Name"
         required
         onChange={props.handleChange}
+        value=""
       />
       <FormField
         name="paymentType"
@@ -18,6 +19,7 @@ const PaymentDetailsFields = (props: { handleChange: any; }) => {
         placeholder="Payment Type"
         required
         onChange={props.handleChange}
+        value=""
 
       />
       <FormField
@@ -27,6 +29,7 @@ const PaymentDetailsFields = (props: { handleChange: any; }) => {
         placeholder="Provider"
         required
         onChange={props.handleChange}
+        value=""
 
       />
       <FormField
@@ -36,6 +39,7 @@ const PaymentDetailsFields = (props: { handleChange: any; }) => {
         placeholder="Card Number"
         required
         onChange={props.handleChange}
+        value=""
 
       />
       
@@ -45,6 +49,7 @@ const PaymentDetailsFields = (props: { handleChange: any; }) => {
         type="text"
         placeholder="Expiration Date"
         onChange={props.handleChange}
+        value=""
 
       />
      
