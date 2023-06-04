@@ -27,6 +27,7 @@ export type initialStateType = {
   isLoading: boolean
   login: (user: any) => void
   addNewUser: (user: any) => void
+  fetchUsers:() => void
   usersLoading: boolean
   usersError: boolean
   user: userType
@@ -37,6 +38,7 @@ const initialState: initialStateType = {
   isLoading: false,
   login: () => {},
   addNewUser: () => {},
+  fetchUsers:() =>{},
   usersLoading: false,
   usersError: false,
   user: {
@@ -70,12 +72,16 @@ export const UserProvider: React.FC<userProps> = ({ children }) => {
       const userDecoded: userType = jwtDecode(queryResult.data)
       const userToLocalStorage = JSON.stringify(userDecoded)
       localStorage.setItem('user', userToLocalStorage)
+      localStorage.setItem('token', queryResult.data)
+
         dispatch({ type: LOGGED_IN, payload: userDecoded})
     } catch (error) {
       console.log(error)
     }
   }
- 
+ const deleteUser = async () =>{
+  
+ }
   const addNewUser = (user: userType) => {
     dispatch({ type: LOGGED_IN_BEGIN })
     try {
@@ -88,26 +94,18 @@ export const UserProvider: React.FC<userProps> = ({ children }) => {
       console.log(error)
     }
   }
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    const fetchUsers = async () => {
-      dispatch({ type: GET_ALL_USERS })
-      try {
-
-        const queryResult = await apiWithHeader.get('/users')
-        dispatch({ type: GET_USERS_SUCCESS, payload: queryResult })
-      } catch (error) {
-        dispatch({ type: GET_USERS_ERROR })
-      }
+  const fetchUsers = async () => {
+    dispatch({ type: GET_ALL_USERS })
+    try {
+      const queryResult = await api.get('/users')
+      dispatch({ type: GET_USERS_SUCCESS, payload: queryResult.data })
+    } catch (error) {
+      dispatch({ type: GET_USERS_ERROR })
     }
-    if(token){
-      fetchUsers()
-
-    }
-  }, [])
+  }
 
   return (
-    <UserContext.Provider value={{ ...state, login, addNewUser }}>{children}</UserContext.Provider>
+    <UserContext.Provider value={{ ...state, login, addNewUser, fetchUsers }}>{children}</UserContext.Provider>
   )
 }
 export const useUserContext = () => {

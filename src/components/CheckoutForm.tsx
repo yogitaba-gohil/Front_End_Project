@@ -15,7 +15,6 @@ export const CheckoutForm = () => {
   const { cart, totalAmount, addToOrder, orders } = useCartContext()
   const { user } = useUserContext()
   const UserId = user.id
-
   const [succeeded, setSucceeded] = useState(false)
   const [editPayment, setEditPayment] = useState(false)
   const [addPayment, setAddPayment] = useState(false)
@@ -85,9 +84,9 @@ export const CheckoutForm = () => {
   const handleCheckout = async () => {
     if (!billingDetails || !paymentDetails) return alert('Please select address and payment method')
     const orderDetails = cart?.map((item) => {
-      const { id, image, sizes, price, quantity } = item
+      const { id, image, price, quantity } = item
       const productId = id
-      const size = sizes
+      const size = "small"
       return {
         image,
         price,
@@ -100,6 +99,7 @@ export const CheckoutForm = () => {
     })
 
     const response = await api.post('/order-details/all-order-details', orderDetails)
+
 
     if (response.status === 200) {
       const idsToCreateOrder = response.data.map((item: any) => item.id)

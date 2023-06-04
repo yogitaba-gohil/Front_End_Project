@@ -10,7 +10,8 @@ import {
   ADD_TO_ORDER,
   GET_ALL_ORDERS,
   GET_ORDERS_SUCCESS,
-  GET_ORDERS_ERROR
+  GET_ORDERS_ERROR,
+  REMOVE_ORDER
 } from '../redux/actions/action'
 import { api } from '../utils/api'
 
@@ -51,6 +52,7 @@ export type initialStateType = {
   clearCart: () => void
   orders: orderType[]
   addToOrder: (orders: orderType) => void
+  deleteOrder:(id:string) => void
   orderLoading: boolean
   ordersError: boolean
 }
@@ -74,6 +76,7 @@ const initialState = {
   clearCart: () => {},
   orders: [],
   addToOrder: () => {},
+  deleteOrder:() =>{},
   orderLoading: false,
   ordersError: false
 }
@@ -102,7 +105,16 @@ export const CartProvider: React.FC<cartProps> = ({ children }) => {
   const removeItem = (id: string) => {
     dispatch({ type: REMOVE_CART_ITEM, payload: id })
   }
+const deleteOrder = async (id: string)=>{
+  const response = await api.delete(`/orders/${id}`)
 
+  if (response.status === 200) {
+    const updatedOrderList = await api.get('/orders')
+    dispatch({ type: REMOVE_ORDER, payload: updatedOrderList.data })
+  }
+ 
+
+}
   const addToOrder = async (orders: orderType) => {
     const response = await api.post('/orders', orders)
 
@@ -123,9 +135,9 @@ export const CartProvider: React.FC<cartProps> = ({ children }) => {
     const fetchOrders = async () => {
       dispatch({ type: GET_ALL_ORDERS })
       try {
-        const queryResult = await fetch('http://localhost:5173/products.json')
-        const result = await queryResult.json()
-        dispatch({ type: GET_ORDERS_SUCCESS, payload: result.orders })
+        const queryResult =  await api.get('/orders')
+        const result = await queryResult.data
+        dispatch({ type: GET_ORDERS_SUCCESS, payload: result })
       } catch (error) {
         dispatch({ type: GET_ORDERS_ERROR })
       }
@@ -140,7 +152,7 @@ export const CartProvider: React.FC<cartProps> = ({ children }) => {
 
   return (
     <CartContext.Provider
-      value={{ ...state, addToCart, removeItem, toggleAmount, clearCart, addToOrder }}>
+      value={{ ...state, addToCart, removeItem, toggleAmount, clearCart, addToOrder, deleteOrder }}>
       {children}
     </CartContext.Provider>
   )

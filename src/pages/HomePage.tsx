@@ -5,7 +5,9 @@ import { useProductsContext } from '../context/products_context'
 
 
 const HomePage = () => {
-  const {fetchProducts} = useProductsContext()
+  const {fetchProducts, allProducts} = useProductsContext()
+
+  console.log('allProducts', allProducts)
 
   useEffect(() => {
     // when component mounts clear the filter

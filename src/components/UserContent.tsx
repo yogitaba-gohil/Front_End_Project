@@ -7,12 +7,17 @@ import { Link } from 'react-router-dom'
 import { useUserContext } from '../context/user_context'
 
 const UserContent = () => {
-  const { users } = useUserContext()
+  const { users, fetchUsers } = useUserContext()
   const [allUsers, setAllUsers] = useState(users)
 
   useEffect(() => {
     return setAllUsers(users)
   }, [users])
+
+  useEffect(()=>{
+    fetchUsers()
+  },[])
+
 
   const handleDelete = (email: any) => {
     if (allUsers?.length) {
@@ -29,11 +34,7 @@ const UserContent = () => {
         return <div className="productListItem">{params.row.email}</div>
       }
     },
-    {
-      field: 'password',
-      headerName: 'Password',
-      width: 160
-    },
+   
     {
       field: 'role',
       headerName: 'Role',
@@ -49,13 +50,13 @@ const UserContent = () => {
       renderCell: (params: any) => {
         return (
           <>
-            <Link to={'/product/' + params.row.id}>
-              <button className="productListEdit">Edit</button>
-            </Link>
-            <DeleteOutline
+           <button>
+           <DeleteOutline
               className="productListDelete"
               onClick={() => handleDelete(params.row.id)}
             />
+           </button>
+           
           </>
         )
       }

@@ -17,6 +17,7 @@ const AdminContent = () => {
     setData(allProducts)
   }, [allProducts])
 
+
   const handleDelete = (id: any) => {
     removeProduct(id)
   }
@@ -40,7 +41,7 @@ const AdminContent = () => {
       }
     },
     {
-      field: 'categories',
+      field: 'category',
       headerName: 'Category',
       width: 160
     },

@@ -28,11 +28,8 @@ const LogInContent = () => {
     login(postData);
     navigate('/')
   }
-  console.log('user', user)
 
-  if (user) {
-    return user.role =='ADMIN' ? <Navigate to="/" /> : null
-  }
+ 
 
 
   return (

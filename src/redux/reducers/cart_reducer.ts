@@ -7,7 +7,8 @@ import {
   TOGGLE_CART_ITEM_AMOUNT,
   GET_ORDERS_SUCCESS,
   GET_ALL_ORDERS,
-  GET_ORDERS_ERROR
+  GET_ORDERS_ERROR,
+  REMOVE_ORDER
 } from '../actions/action'
 import { initialStateType, cartType } from '../../context/cart_context'
 
@@ -81,6 +82,9 @@ const cart_reducer = (state: initialStateType, action: { type: any; payload?: an
     return { ...state, cart: tempCart }
   }
   if (action.type == ADD_TO_ORDER) {
+    return { ...state, orders: action.payload }
+  }
+  if (action.type == REMOVE_ORDER) {
     return { ...state, orders: action.payload }
   }
   if (action.type === COUNT_CART_TOTALS) {
