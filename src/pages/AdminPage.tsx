@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
 import AdminContent from '../components/AdminContent'
@@ -6,13 +6,21 @@ import AdminSidebar from '../components/AdminSidebar'
 import PageHero from '../components/PageHero'
 import UserContent from '../components/UserContent'
 import OrderContent from '../components/OrderContent'
+import { useCartContext } from '../context/cart_context'
+import { useUserContext } from '../context/user_context'
 
 const AdminPage = () => {
   const [data, setData] = useState('products')
+  const { fetchOrders } = useCartContext()
+  const { fetchUsers } = useUserContext()
 
   const handleChange = (arg: string) => {
     setData(arg)
   }
+  useEffect(() => {
+    fetchOrders()
+    fetchUsers()
+  }, [])
   return (
     <Wrapper>
       <PageHero title="Admin" />
@@ -20,7 +28,15 @@ const AdminPage = () => {
         <div className="select">
           <AdminSidebar handleChange={handleChange} />
         </div>
-        <Wrapper className="page">{data == 'products' ? <AdminContent /> : data == 'users' ? <UserContent /> : <OrderContent />}</Wrapper>
+        <Wrapper className="page">
+          {data == 'products' ? (
+            <AdminContent />
+          ) : data == 'users' ? (
+            <UserContent />
+          ) : (
+            <OrderContent />
+          )}
+        </Wrapper>
       </div>
     </Wrapper>
   )

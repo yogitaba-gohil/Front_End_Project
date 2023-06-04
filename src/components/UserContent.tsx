@@ -2,27 +2,20 @@ import { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { DataGrid } from '@mui/x-data-grid'
 import { DeleteOutline } from '@mui/icons-material'
-import { Link } from 'react-router-dom'
 
 import { useUserContext } from '../context/user_context'
 
 const UserContent = () => {
-  const { users, fetchUsers } = useUserContext()
+  const { users, deleteUser } = useUserContext()
   const [allUsers, setAllUsers] = useState(users)
 
   useEffect(() => {
     return setAllUsers(users)
   }, [users])
 
-  useEffect(()=>{
-    fetchUsers()
-  },[])
-
-
-  const handleDelete = (email: any) => {
-    if (allUsers?.length) {
-      setAllUsers(allUsers.filter((item) => item.email !== email))
-    }
+ 
+  const handleDelete = (id: string) => {
+    deleteUser(id)
   }
   const columns = [
     { field: 'id', headerName: 'ID', width: 90 },
@@ -40,7 +33,7 @@ const UserContent = () => {
       headerName: 'Role',
       width: 160,
       renderCell: (params: any) => {
-        return <div className="productListItem">{params.row.isAdmin ? 'Admin' : 'user'}</div>
+        return <div className="productListItem">{params.row.role}</div>
       }
     },
     {

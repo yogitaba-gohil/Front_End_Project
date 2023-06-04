@@ -1,6 +1,6 @@
 import FormField from "./FormField";
 
-const PaymentDetailsFields = (props: { handleChange: any; }) => {
+const PaymentDetailsFields = (props: { handleChange: any, paymentDetails:any }) => {
   return (
     <>
       <FormField
@@ -10,7 +10,7 @@ const PaymentDetailsFields = (props: { handleChange: any; }) => {
         placeholder="Card Holder Name"
         required
         onChange={props.handleChange}
-        value=""
+        value={props.paymentDetails.cardHolderName}
       />
       <FormField
         name="paymentType"
@@ -19,7 +19,7 @@ const PaymentDetailsFields = (props: { handleChange: any; }) => {
         placeholder="Payment Type"
         required
         onChange={props.handleChange}
-        value=""
+        value={props.paymentDetails.paymentType}
 
       />
       <FormField
@@ -29,7 +29,7 @@ const PaymentDetailsFields = (props: { handleChange: any; }) => {
         placeholder="Provider"
         required
         onChange={props.handleChange}
-        value=""
+        value={props.paymentDetails.provider}
 
       />
       <FormField
@@ -39,7 +39,7 @@ const PaymentDetailsFields = (props: { handleChange: any; }) => {
         placeholder="Card Number"
         required
         onChange={props.handleChange}
-        value=""
+        value={props.paymentDetails.cardNumber}
 
       />
       
@@ -49,7 +49,7 @@ const PaymentDetailsFields = (props: { handleChange: any; }) => {
         type="text"
         placeholder="Expiration Date"
         onChange={props.handleChange}
-        value=""
+        value={props.paymentDetails.expirationDate}
 
       />
      

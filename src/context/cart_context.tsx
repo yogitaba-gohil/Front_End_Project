@@ -52,6 +52,7 @@ export type initialStateType = {
   clearCart: () => void
   orders: orderType[]
   addToOrder: (orders: orderType) => void
+  fetchOrders:() =>void
   deleteOrder:(id:string) => void
   orderLoading: boolean
   ordersError: boolean
@@ -77,6 +78,7 @@ const initialState = {
   orders: [],
   addToOrder: () => {},
   deleteOrder:() =>{},
+  fetchOrders:() =>{},
   orderLoading: false,
   ordersError: false
 }
@@ -131,17 +133,17 @@ const deleteOrder = async (id: string)=>{
   const clearCart = () => {
     dispatch({ type: CLEAR_CART })
   }
-  useEffect(() => {
-    const fetchOrders = async () => {
-      dispatch({ type: GET_ALL_ORDERS })
-      try {
-        const queryResult =  await api.get('/orders')
-        const result = await queryResult.data
-        dispatch({ type: GET_ORDERS_SUCCESS, payload: result })
-      } catch (error) {
-        dispatch({ type: GET_ORDERS_ERROR })
-      }
+  const fetchOrders = async () => {
+    dispatch({ type: GET_ALL_ORDERS })
+    try {
+      const queryResult =  await api.get('/orders')
+      const result = await queryResult.data
+      dispatch({ type: GET_ORDERS_SUCCESS, payload: result })
+    } catch (error) {
+      dispatch({ type: GET_ORDERS_ERROR })
     }
+  }
+  useEffect(() => {
     fetchOrders()
   }, [])
   // when the cart changes, store the changes to localStorage + re-calculate total amount in cart
@@ -152,7 +154,7 @@ const deleteOrder = async (id: string)=>{
 
   return (
     <CartContext.Provider
-      value={{ ...state, addToCart, removeItem, toggleAmount, clearCart, addToOrder, deleteOrder }}>
+      value={{ ...state, addToCart, removeItem, toggleAmount, clearCart, addToOrder, deleteOrder, fetchOrders }}>
       {children}
     </CartContext.Provider>
   )

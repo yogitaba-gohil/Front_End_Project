@@ -46,7 +46,7 @@
       "id": 4,
       "name": "Nail Polish",
       "description": "use right shade and bright your day",
-      "categories": "Nail",
+      "categoryId": "3ce9c0ee-0c41-4331-8594-666cb29d714f",
       "sizes": "small",
       "images": [
        "https://img.freepik.com/free-photo/flat-lay-nail-care-products-arrangement_23-2149046527.jpg?w=826&t=st=1680495343~exp=1680495943~hmac=c5694afa2934d19570e2f6a4d3f4708ef900cdc06a8b2bceaa57e8b44811219a",
@@ -54,7 +54,8 @@
        "https://img.freepik.com/free-photo/hands-holding-container_1153-1644.jpg?w=1800&t=st=1680495458~exp=1680496058~hmac=f771510eb25f96a9c5f29445e84f44d7dde271c224bd07336782b538c6955667"
       ],
       "price": 100,
-      "slug": "nail"
+      "slug": "nail",
+      "variants": "Gel Polish"
     },
     {
       "id": 5,

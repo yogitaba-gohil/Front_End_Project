@@ -45,15 +45,22 @@ export const CheckoutForm = () => {
 
   const getUserAddress = async () => {
     const response = await api.get(`addresses/user/${UserId}`)
-    if (response.data) {
+    if (response.data.length > 0) {
       setBillingDetails(response.data[0])
+    }else{
+      setAddPayment(true)
+      setAddAddress(true)
     }
   }
   const getPaymentDetails = async () => {
     const response = await api.get(`payment/user/${UserId}`)
-    if (response.data) {
+    if (response.data.length > 0 ) {
       setPaymentDetails(response.data[0])
+    }else{
+      setAddPayment(true)
+      setAddAddress(true)
     }
+   
   }
   const navigate = useNavigate()
 
@@ -126,7 +133,6 @@ export const CheckoutForm = () => {
   const handlePaymentSubmit = async (event: any) => {
     event.preventDefault()
     sendPaymentData()
-    setEditPayment(false)
     setAddPayment(false)
   }
   const sendPaymentData = async () => {
@@ -209,7 +215,7 @@ export const CheckoutForm = () => {
       {editPayment ? (
         <form onSubmit={handlePaymentSubmit}>
           <h4>card details for test:</h4>{' '}
-          <PaymentDetailsFields handleChange={handlePaymentChange} />{' '}
+          <PaymentDetailsFields handleChange={handlePaymentChange} paymentDetails={paymentDetails} />{' '}
           <button type="submit">Add Payment Details</button>{' '}
         </form>
       ) : (
@@ -218,7 +224,7 @@ export const CheckoutForm = () => {
           <form>
             {' '}
             <h4>User Payment Details:</h4>
-            <PaymentDetails payment={paymentDetails} />{' '}
+            <PaymentDetails payment={paymentDetails}  paymentDetails={paymentDetails}/>{' '}
             <div className="buttonContainer">
               {/* <button className="productAddButton" onClick={handleEditPayment}>
                 Add

@@ -23,7 +23,6 @@ const LogInContent = () => {
       username: newUser.email,
       password: newUser.password
     }
-
     login(postData)
     navigate('/')
   }

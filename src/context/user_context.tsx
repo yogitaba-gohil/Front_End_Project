@@ -6,7 +6,8 @@ import {
   GET_ALL_USERS,
   GET_USERS_SUCCESS,
   GET_USERS_ERROR,
-  LOGGED_IN_BEGIN
+  LOGGED_IN_BEGIN,
+  REMOVE_USER
 } from '../redux/actions/action'
 import { api, apiWithHeader } from '../utils/api'
 import { getTokenFromLocalStorage } from '../utils/token'
@@ -18,8 +19,8 @@ export type userType = {
   isAdmin: boolean | null
   fname: string | null
   lname: string | null
-  id:string
-  token:string
+  id: string
+  token: string
   role: string
 }
 export type initialStateType = {
@@ -27,7 +28,8 @@ export type initialStateType = {
   isLoading: boolean
   login: (user: any) => void
   addNewUser: (user: any) => void
-  fetchUsers:() => void
+  fetchUsers: () => void
+  deleteUser:(id:string) => void
   usersLoading: boolean
   usersError: boolean
   user: userType
@@ -38,18 +40,19 @@ const initialState: initialStateType = {
   isLoading: false,
   login: () => {},
   addNewUser: () => {},
-  fetchUsers:() =>{},
+  fetchUsers: () => {},
+  deleteUser:() =>{},
   usersLoading: false,
   usersError: false,
   user: {
-    email: "",
-  password: "",
-  isAdmin: false,
-  fname:"",
-  lname: "",
-  id:"",
-  token:"",
-  role: ""
+    email: '',
+    password: '',
+    isAdmin: false,
+    fname: '',
+    lname: '',
+    id: '',
+    token: '',
+    role: ''
   },
   userLoading: false
 }
@@ -63,7 +66,7 @@ type userProps = {
 export const UserProvider: React.FC<userProps> = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState)
 
-  const login = async(user: userType) => {
+  const login = async (user: userType) => {
     dispatch({ type: LOGGED_IN_BEGIN })
     try {
       const queryResult = await api.post('/users/signin', user)
@@ -74,14 +77,18 @@ export const UserProvider: React.FC<userProps> = ({ children }) => {
       localStorage.setItem('user', userToLocalStorage)
       localStorage.setItem('token', queryResult.data)
 
-        dispatch({ type: LOGGED_IN, payload: userDecoded})
+      dispatch({ type: LOGGED_IN, payload: userDecoded })
     } catch (error) {
       console.log(error)
     }
   }
- const deleteUser = async () =>{
-  
- }
+  const deleteUser = async (id: string) => {
+    const removeUser = await api.delete(`/users/${id}`)
+    if (removeUser.status) {
+      fetchUsers()
+    }
+    dispatch({ type: REMOVE_USER, payload: removeUser.status })
+  }
   const addNewUser = (user: userType) => {
     dispatch({ type: LOGGED_IN_BEGIN })
     try {
@@ -105,7 +112,9 @@ export const UserProvider: React.FC<userProps> = ({ children }) => {
   }
 
   return (
-    <UserContext.Provider value={{ ...state, login, addNewUser, fetchUsers }}>{children}</UserContext.Provider>
+    <UserContext.Provider value={{ ...state, login, addNewUser, fetchUsers, deleteUser }}>
+      {children}
+    </UserContext.Provider>
   )
 }
 export const useUserContext = () => {

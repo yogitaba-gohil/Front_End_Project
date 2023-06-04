@@ -40,6 +40,7 @@ export const LOGGED_IN_BEGIN  ='LOGGED_IN_BEGIN '
 export const GET_ALL_USERS = 'GET_ALL_USERS'
 export const GET_USERS_SUCCESS = 'GET_USERS_SUCCESS'
 export const GET_USERS_ERROR = 'GET_USERS_ERROR'
+export const REMOVE_USER = 'REMOVE_USER'
 
 export const ADD_TO_ORDER = 'ADD_TO_ORDER'
 export const GET_ALL_ORDERS = 'GET_ALL_ORDERS'

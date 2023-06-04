@@ -8,7 +8,8 @@ import {
   GET_USERS_SUCCESS,
   GET_USERS_ERROR,
   LOGGED_IN_BEGIN,
-  SIGN_UP
+  SIGN_UP,
+  REMOVE_USER
 } from '../actions/action'
 
 
@@ -18,11 +19,10 @@ const user_reducer = (state: initialStateType, action: AnyAction) => {
   }
   if (action.type === GET_USERS_SUCCESS) {
     const allUsers = action.payload.map((user: any) => {
-      let { email, password, isAdmin , id} = user
+      let { email, role , id} = user
       return {
         email,
-        password,
-        isAdmin,
+        role,
         id
       }
     })
@@ -33,6 +33,9 @@ const user_reducer = (state: initialStateType, action: AnyAction) => {
     return { ...state, usersError: true, usersLoading: false }
   }
   if (action.type === LOGGED_IN_BEGIN) {
+    return { ...state, userLoading: true }
+  }
+  if (action.type === REMOVE_USER) {
     return { ...state, userLoading: true }
   }
   if(action.type === SIGN_UP){
