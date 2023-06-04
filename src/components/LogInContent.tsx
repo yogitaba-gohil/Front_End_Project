@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom'
 
 import { useUserContext } from '../context/user_context'
 
-
 const LogInContent = () => {
   const { login, user } = useUserContext()
   const navigate = useNavigate()
@@ -18,19 +17,16 @@ const LogInContent = () => {
     setNewUser({ ...newUser, [event.target.name]: event.target.value })
   }
 
-  const handleLogin = async(event: React.FormEvent<HTMLFormElement>) => {
+  const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const postData = {
-      username:newUser.email,
-      password:newUser.password
+      username: newUser.email,
+      password: newUser.password
     }
-   
-    login(postData);
+
+    login(postData)
     navigate('/')
   }
-
- 
-
 
   return (
     <Wrapper>
