@@ -32,12 +32,14 @@ function EditProductPage(props: any) {
   
 
   useEffect(() => {
-    if( props.productId !== "" && singleProduct.id !== ''){
+    if( props.productId !== "" || singleProduct.id !== ''){
       fetchSingleProduct(props.productId)
       setProductData(singleProduct)
     }
     
   }, [singleProduct.id, props.productId])
+
+  console.log('singleProduct', singleProduct,props)
 
 
   const handleBack = () => {
@@ -129,7 +131,7 @@ function EditProductPage(props: any) {
                   onChange={(event) => handleChange(event)}
                 />
               </div>
-              <div className="productFormLeft">
+              {/* <div className="productFormLeft">
                 <label>Categories</label>
                 <input
                   type="text"
@@ -138,7 +140,7 @@ function EditProductPage(props: any) {
                   defaultValue={productData.categoryId}
                   onChange={(event) => handleChange(event)}
                 />
-              </div>
+              </div> */}
               <div className="productFormLeft">
                 <label>Price</label>
                 <input

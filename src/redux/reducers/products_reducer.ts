@@ -64,6 +64,7 @@ const newCategory = category.name
     return {...state, singleProductLoading: true}
   }
   if (action.type === GET_SINGLE_PRODUCT_SUCCESS) {
+    console.log('action.payload', action.payload)
     // check if it returns the correct productDataType object instead of an array
     return { ...state, singleProduct: action.payload, singleProductLoading: false }
   }

@@ -86,7 +86,7 @@ export const ProductsProvider: React.FC<productProps> = ({ children }) => {
   }
 
   const fetchSingleProduct = async (id: string) => {
-    // dispatch({ type: GET_SINGLE_PRODUCT_BEGIN })
+    dispatch({ type: GET_SINGLE_PRODUCT_BEGIN })
     try {
       const singleProduct = await api.get(`/products/${id}`)
       if (singleProduct.data) {
